@@ -10,5 +10,5 @@ wheels/
 .venv
 
 # custom additions
-src/explore_01_mosquito_landcover.ipynb
+notebooks/explore_01_mosquito_landcover.ipynb
 
