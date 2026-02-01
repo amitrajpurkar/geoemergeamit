@@ -1,0 +1,17 @@
+
+# datasets from geo-emerge team
+datasets:
+  mosquito: "https://github.com/geo-di-lab/emerge-lessons/raw/refs/heads/main/docs/data/globe_mosquito.zip"
+  countries: "https://github.com/geo-di-lab/emerge-lessons/raw/refs/heads/main/docs/data/world_countries_general.geojson"
+  landcover: "https://github.com/geo-di-lab/emerge-lessons/raw/refs/heads/main/docs/data/globe_land_cover.zip"
+  floridaboundaries: "https://github.com/geo-di-lab/emerge-lessons/raw/refs/heads/main/docs/data/florida_boundary.geojson"
+
+
+# google earth engine
+googleearthengine:
+  projectid: "anr-41793"
+  token: "4/1ASc3gC10Rr2sTMCixTQBluw7j0ERfTI5DtjdHlVClvQvsSleHKJT9la2wPI"
+
+# google earth engine datasets
+eeimagesets:
+  vegetation: "COPERNICUS/S2_SR_HARMONIZED"
