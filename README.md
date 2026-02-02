@@ -24,3 +24,7 @@
 * https://devpost.com/software/intermediate-mosquito-risk-mapping/joins/4fMCrrQazod7qWdh_ibMJg
 * https://devpost.com/software/intermediate-mosquito-risk-mapping
 
+
+#### to be done.. 
+* jupyter nbconvert --clear-output --inplace your_notebook.ipynb
+* -- with above before git commit, always clear outputs from jupyter notebooks

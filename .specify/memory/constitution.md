@@ -1,50 +1,62 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
-
+<!--
+ Sync Impact Report
+ - Version change: N/A -> 0.1.0
+ - Modified principles: N/A (initial)
+ - Added sections: Core Principles, Application & Data Standards, Development Workflow & Quality Gates, Governance
+ - Removed sections: N/A
+ - Templates requiring updates: ⚠ pending review (.specify/templates/*.md)
+ - Follow-up TODOs: TODO(RATIFICATION_DATE) set ratification date once agreed
+ -->
+ 
+ # GeoEmerge Mosquito Risk Mapping Constitution
+ 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+ ### 1) Clean Architecture Boundaries
+ Domain/business logic MUST not depend on frameworks, web layers, or infrastructure.
+ Dependencies MUST point inward. Prefer composition over inheritance.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+ ### 2) Reproducible EDA Over Intuition
+ EDA work MUST be reproducible (seeded, scripted/notebooked, and rerunnable).
+ Surface schema, missingness, outliers, distributions, correlations, and leakage risk
+ before modeling.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+ ### 3) Tests for Non-Trivial Logic
+ Any non-trivial domain logic MUST have tests (prefer `pytest`).
+ Tests MUST be deterministic and avoid unnecessary mocking.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+ ### 4) Contract-Driven API
+ API request/response schemas MUST be explicit and versioned.
+ Breaking changes require a migration plan and a version bump.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+ ### 5) Observability, Safety, and Simplicity
+ Do not swallow exceptions. Log meaningful events (without secrets/PII). Validate all
+ external inputs at boundaries. Avoid over-engineering; keep changes minimal.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+ ## Application & Data Standards
+ 
+ - Python target MUST be 3.10+.
+ - Type hints SHOULD be used for production code paths.
+ - Notebooks MUST have outputs cleared before commit (`jupyter nbconvert --clear-output`).
+ - Raw datasets MUST be preserved; preprocessing steps MUST be explainable.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+ ## Development Workflow & Quality Gates
+ 
+ - Changes MUST be small and aligned to existing architecture (no unrelated refactors).
+ - PRs MUST include:
+   - What changed and why
+   - Risks and rollout/validation plan (if applicable)
+   - Evidence: tests run and/or EDA artifacts updated
 
 ## Governance
 <!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+ This constitution is the top-level standard for this repository.
+ 
+ - Amendments MUST update this file and increment semantic versioning:
+   - MAJOR: breaking governance changes or principle removals
+   - MINOR: new/expanded principle or section
+   - PATCH: clarifications/wording
+ - All significant changes MUST be reviewed for compliance.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+ **Version**: 0.1.0 | **Ratified**: TODO(RATIFICATION_DATE) | **Last Amended**: 2026-02-02
