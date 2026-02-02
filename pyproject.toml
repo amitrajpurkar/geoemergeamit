@@ -14,4 +14,9 @@ dependencies = [
   "ipykernel",
   "geemap",
   "scipy",
+  "pytest",
 ]
+
+ [tool.pytest.ini_options]
+ testpaths = ["backend/tests"]
+ addopts = "-q"

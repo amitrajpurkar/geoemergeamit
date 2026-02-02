@@ -22,15 +22,15 @@ description: "Task list for Mosquito Risk Dashboard implementation"
 
 **Purpose**: Establish backend/frontend project skeletons, dependency tooling, and test harness.
 
-- [ ] T001 Create backend package skeleton per plan in backend/src/{api,domain,services,infra,eda}/__init__.py
-- [ ] T002 Create backend test skeleton per plan in backend/tests/{unit,integration}/__init__.py
-- [ ] T003 Create frontend skeleton folders per plan in frontend/src/{pages,components,services}/ and frontend/tests/
-- [ ] T004 [P] Add `backend/README.md` describing local dev run for backend
-- [ ] T005 [P] Add `frontend/README.md` describing local dev run for frontend
-- [ ] T006 Add pytest configuration and ensure `pytest` is available via pyproject.toml (update pyproject.toml)
-- [ ] T007 Add backend runnable entrypoint (module) in backend/__main__.py
-- [ ] T008 Add backend application config loader stub in backend/src/infra/config.py
-- [ ] T009 Add shared typing models module stub in backend/src/domain/types.py
+- [X] T001 Create backend package skeleton per plan in backend/src/{api,domain,services,infra,eda}/__init__.py
+- [X] T002 Create backend test skeleton per plan in backend/tests/{unit,integration}/__init__.py
+- [X] T003 Create frontend skeleton folders per plan in frontend/src/{pages,components,services}/ and frontend/tests/
+- [X] T004 [P] Add `backend/README.md` describing local dev run for backend
+- [X] T005 [P] Add `frontend/README.md` describing local dev run for frontend
+- [X] T006 Add pytest configuration and ensure `pytest` is available via pyproject.toml (update pyproject.toml)
+- [X] T007 Add backend runnable entrypoint (module) in backend/__main__.py
+- [X] T008 Add backend application config loader stub in backend/src/infra/config.py
+- [X] T009 Add shared typing models module stub in backend/src/domain/types.py
 
 ---
 

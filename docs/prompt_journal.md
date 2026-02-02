@@ -20,4 +20,7 @@
 ## speckit.tasks
 * prepare a task list to implement the specifications in spec.md; make use of AGENTS.md located in the root folder of this project to guide your work; make use of Skills located in ./.windsurf/skills/ to guide your work; especially for exploratory-data-analysis skill, make use of the data_exploration.md and visualization.md skills; 
 
+## speckit.implement
+* implement all tasks under phase 1 from tasks.md; make use of AGENTS.md located in the root folder of this project to guide your work; make use of Skills located in ./.windsurf/skills/ to guide your work; especially use the skill code-review as you implement the tasks; 
+* implement under Phase 2, only tasks T010, T011
 
