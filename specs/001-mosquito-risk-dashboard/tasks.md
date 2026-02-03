@@ -116,10 +116,12 @@ temperature, land coverage, and precipitation layers for the same location/date 
 - [X] T044 [P] [US2] Add home page form UI (City/ZIP + date range) in frontend/src/components/RiskQueryForm.tsx
 - [X] T045 [US2] Wire form submission to API and update both map panels in frontend/src/pages/Home.tsx
 - [X] T046 [US2] Add loading/empty/error states to Home page in frontend/src/pages/Home.tsx
-- [ ] T064 [US2] Adjust query region derivation to enforce 100-mile radius for ZIP/point-based queries in backend/src/services/risk_service.py
-- [ ] T065 [US2] Extend backend response to support multiple overlay layers (risk + LST + land cover + precipitation) for /api/risk/default and /api/risk/query (new response schema + service changes)
-- [ ] T066 [US2] Update frontend map panels to allow switching between overlay layers (risk/LST/land cover/precip) in frontend/src/components/RiskMap.tsx and frontend/src/pages/Home.tsx
-- [ ] T067 [P] [US2] Add integration test coverage for 100-mile radius behavior (mock geocoder point result) in backend/tests/integration/test_api_risk_query.py
+- [X] T064 [US2] Adjust query region derivation to enforce 100-mile radius for ZIP/point-based queries in backend/src/services/risk_service.py
+- [X] T065 [US2] Extend backend response to support multiple overlay layers (risk + LST + land cover + precipitation) for /api/risk/default and /api/risk/query (new response schema + service changes)
+- [X] T066 [US2] Update frontend map panels to allow switching between overlay layers (risk/LST/land cover/precip) in frontend/src/components/RiskMap.tsx and frontend/src/pages/Home.tsx
+- [X] T067 [P] [US2] Add integration test coverage for 100-mile radius behavior (mock geocoder point result) in backend/tests/integration/test_api_risk_query.py
+- [X] T068 [US2] Fix home page UX mismatch after a query by updating panel titles and/or behavior to reflect the queried location/date range in frontend/src/pages/Home.tsx
+- [X] T069 [US2] Add minimal API-level validation for RiskQueryRequestSchema.location_text (e.g., non-empty/trimmed + max length) in backend/src/api/schemas.py
 
 **Checkpoint**: User Story 2 works independently (even if US3 is not implemented).
 
@@ -162,6 +164,9 @@ temperature, land coverage, and precipitation layers for the same location/date 
 - [ ] T061 Add rate limiting or basic request throttling in backend/src/api/middleware.py
 - [ ] T062 Add end-to-end smoke test script described in specs/001-mosquito-risk-dashboard/quickstart.md
 - [ ] T063 Run quickstart.md validation and update quickstart.md if steps diverge
+- [ ] T070 [US2] Move Earth Engine geometry conversion and buffering logic out of backend/src/services/risk_service.py into an infra adapter (e.g., backend/src/infra/ee_geometry.py) and keep RiskService orchestration-focused
+- [ ] T071 [US2] Add caching and basic rate-limit protection for geocoding requests (e.g., TTL cache keyed by normalized location_text + simple retry/backoff on 429/5xx) in backend/src/infra/geocoding.py
+- [ ] T072 Harden dataset download/extraction: safe zip extraction and streaming downloads to reduce memory usage in backend/src/infra/datasets.py
 
 ---
 

@@ -9,12 +9,27 @@ export type RiskBand = {
   color: string
 }
 
+export type OverlayLayer = {
+  layer_id: string
+  label: string
+  tile_url_template: string
+  attribution?: string
+}
+
+export type Viewport = {
+  center_lat: number
+  center_lng: number
+  radius_meters: number
+}
+
 export type RiskLayerResponse = {
   location_label: string
   date_range: DateRange
   tile_url_template: string
   attribution?: string
   legend: RiskBand[]
+  layers?: OverlayLayer[]
+  viewport?: Viewport | null
 }
 
 export type RiskQueryRequest = {

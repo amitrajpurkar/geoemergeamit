@@ -61,3 +61,17 @@
 
 ## speckit.specify
 * update user story 2 from specs.md to include that when user enters zipcode and date range, the application should apply the mosqito risk data for an area within 100 miles radius of that zipcode; also include that the application should show the mosqito risk data in both charts along with Land-surface-temperature, land-coverage and precipitation data; after updating specs.md also update plan.md and tasks.md accordingly
+
+
+## speckit.implement
+* implement additional tasks added to User Story 2
+
+## review
+* review code changes again and provide recommendations
+* update the tasks.md file to add priority one recommendations to the task list under Phase 4 after T067 and priority 2 and 3 recommendations to the tasks under Phase 6
+* run and verify the application... (AI did this part, asked me to verify as well)
+* when i enter a zipcode and date range, the application should update both maps to highlight the area within 100 miles radius of that zipcode; this is not happening; also on the charts the layers for mosquito risk, land-surface-temperature, land-coverage and precipitation data should be updated to show the data for the area within 100 miles radius of that zipcode; this is not working as well;
+* AI does further fixes and verification
+
+## speckit.implement
+* implement newly added tasks under Phase 4

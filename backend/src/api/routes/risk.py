@@ -26,6 +26,8 @@ def get_default_risk(window: DefaultWindow = Query(...)) -> RiskLayerResponseSch
         tile_url_template=layer["tile_url_template"],
         attribution=layer.get("attribution"),
         legend=layer["legend"],
+        layers=layer.get("layers", []),
+        viewport=layer.get("viewport"),
     )
 
 
@@ -43,4 +45,6 @@ def post_risk_query(body: RiskQueryRequestSchema) -> RiskLayerResponseSchema:
         tile_url_template=layer["tile_url_template"],
         attribution=layer.get("attribution"),
         legend=layer["legend"],
+        layers=layer.get("layers", []),
+        viewport=layer.get("viewport"),
     )

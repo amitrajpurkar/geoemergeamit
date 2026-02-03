@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import re
 from typing import Any
 
 import httpx
@@ -35,6 +36,8 @@ class NominatimGeocoder(Geocoder):
 
         url = "https://nominatim.openstreetmap.org/search"
         params = {"q": location_text, "format": "geojson", "limit": 1}
+        if re.fullmatch(r"\d{5}(-\d{4})?", location_text.strip()):
+            params["countrycodes"] = "us"
         headers = {"User-Agent": "geoemerge/0.1 (local dev)"}
 
         try:

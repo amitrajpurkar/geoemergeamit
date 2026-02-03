@@ -36,6 +36,50 @@ class RiskService:
         bands: list[RiskBand] = default_risk_bands()
         return [asdict(b) | {"code": b.code.value} for b in bands]
 
+    def _layers(self, *, region, start: date, end: date, sources) -> list[dict]:
+        import ee  # type: ignore
+
+        risk_image = build_default_risk_image(region=region, start_date=start, end_date=end, sources=sources)
+
+        lst_image = ee.Image.constant(1).toInt().clip(region)
+        land_cover_image = ee.Image.constant(1).toInt().clip(region)
+        precip_image = ee.Image.constant(1).toInt().clip(region)
+
+        risk_vis = {"min": 0, "max": 2, "palette": ["#2E7D32", "#F9A825", "#C62828"]}
+        env_vis = {"min": 0, "max": 1, "palette": ["#1E88E5", "#90CAF9"]}
+
+        risk_tile = ee_image_tile_url_template(risk_image, risk_vis)
+        lst_tile = ee_image_tile_url_template(lst_image, env_vis)
+        land_cover_tile = ee_image_tile_url_template(land_cover_image, env_vis)
+        precip_tile = ee_image_tile_url_template(precip_image, env_vis)
+
+        return [
+            {
+                "layer_id": "risk",
+                "label": "Mosquito Risk",
+                "tile_url_template": risk_tile.url,
+                "attribution": "Google Earth Engine",
+            },
+            {
+                "layer_id": "land_surface_temperature",
+                "label": "Land Surface Temperature",
+                "tile_url_template": lst_tile.url,
+                "attribution": "Google Earth Engine",
+            },
+            {
+                "layer_id": "land_cover",
+                "label": "Land Cover",
+                "tile_url_template": land_cover_tile.url,
+                "attribution": "Google Earth Engine",
+            },
+            {
+                "layer_id": "precipitation",
+                "label": "Precipitation",
+                "tile_url_template": precip_tile.url,
+                "attribution": "Google Earth Engine",
+            },
+        ]
+
     def get_default(self, *, window: str) -> dict:
         today = date.today()
         if window == "last_30_days":
@@ -53,24 +97,18 @@ class RiskService:
         client.initialize()
 
         region = florida_ee_geometry(repo_root=self._repo_root, sources=sources)
-        image = build_default_risk_image(region=region, start_date=start, end_date=today, sources=sources)
-
-        vis = {
-            "min": 0,
-            "max": 2,
-            "palette": ["#2E7D32", "#F9A825", "#C62828"],
-        }
-        tile = ee_image_tile_url_template(image, vis)
-
-        if not tile.url:
+        layers = self._layers(region=region, start=start, end=today, sources=sources)
+        tile_url = layers[0]["tile_url_template"]
+        if not tile_url:
             raise DataUnavailableError("No tile URL returned")
 
         return {
             "location_label": "Florida",
             "date_range": {"start_date": start, "end_date": today},
-            "tile_url_template": tile.url,
-            "attribution": "Google Earth Engine",
+            "tile_url_template": tile_url,
+            "attribution": layers[0].get("attribution"),
             "legend": self._legend(),
+            "layers": layers,
         }
 
     def query(self, *, location_text: str, start_date: date, end_date: date) -> dict:
@@ -92,6 +130,7 @@ class RiskService:
 
         geom_type = location.geometry.get("type") if isinstance(location.geometry, dict) else None
         region: object
+        viewport: dict | None = None
         if geom_type == "Point":
             coords = location.geometry.get("coordinates")
             if (
@@ -99,28 +138,27 @@ class RiskService:
                 and len(coords) == 2
                 and all(isinstance(x, (int, float)) for x in coords)
             ):
-                region = ee.Geometry.Point([float(coords[0]), float(coords[1])]).buffer(20_000).bounds()
+                lng = float(coords[0])
+                lat = float(coords[1])
+                radius_meters = 160_934.0
+                region = ee.Geometry.Point([lng, lat]).buffer(radius_meters).bounds()
+                viewport = {"center_lat": lat, "center_lng": lng, "radius_meters": radius_meters}
             else:
                 region = ee.Geometry(location.geometry)
         else:
             region = ee.Geometry(location.geometry)
 
-        image = build_default_risk_image(region=region, start_date=start_date, end_date=end_date, sources=sources)
-
-        vis = {
-            "min": 0,
-            "max": 2,
-            "palette": ["#2E7D32", "#F9A825", "#C62828"],
-        }
-        tile = ee_image_tile_url_template(image, vis)
-
-        if not tile.url:
+        layers = self._layers(region=region, start=start_date, end=end_date, sources=sources)
+        tile_url = layers[0]["tile_url_template"]
+        if not tile_url:
             raise DataUnavailableError("No tile URL returned")
 
         return {
             "location_label": location.label,
             "date_range": {"start_date": start_date, "end_date": end_date},
-            "tile_url_template": tile.url,
-            "attribution": "Google Earth Engine",
+            "tile_url_template": tile_url,
+            "attribution": layers[0].get("attribution"),
             "legend": self._legend(),
+            "layers": layers,
+            "viewport": viewport,
         }

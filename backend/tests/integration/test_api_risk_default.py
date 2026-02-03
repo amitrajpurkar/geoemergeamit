@@ -20,3 +20,4 @@ def test_get_default_risk_shape() -> None:
     assert data["location_label"]
     assert data["tile_url_template"].startswith("https://")
     assert len(data["legend"]) == 3
+    assert isinstance(data.get("layers"), list)
