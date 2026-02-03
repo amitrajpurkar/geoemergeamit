@@ -64,5 +64,42 @@ def load_sources_config(path: str | Path) -> SourcesConfig:
     )
 
 
+def merge_local_auth_token(config: SourcesConfig, *, repo_root: str | Path) -> SourcesConfig:
+    auth_path = Path(repo_root) / "env" / "local-auth.yaml"
+    if not auth_path.exists():
+        return config
+
+    raw = yaml.safe_load(auth_path.read_text(encoding="utf-8"))
+    if raw is None:
+        return config
+    if not isinstance(raw, dict):
+        raise ValueError("local-auth.yaml must be a mapping")
+
+    gee_raw = raw.get("googleearthengine")
+    if gee_raw is None:
+        return config
+    if not isinstance(gee_raw, dict):
+        raise ValueError("local-auth.yaml googleearthengine must be a mapping")
+
+    projectid = gee_raw.get("projectid")
+    token = gee_raw.get("token")
+    if projectid is not None and not isinstance(projectid, str):
+        raise ValueError("local-auth.yaml googleearthengine.projectid must be a string")
+    if token is not None and not isinstance(token, str):
+        raise ValueError("local-auth.yaml googleearthengine.token must be a string")
+
+    if projectid is None and token is None:
+        return config
+
+    return SourcesConfig(
+        datasets=config.datasets,
+        eeimagesets=config.eeimagesets,
+        googleearthengine=GoogleEarthEngineConfig(
+            projectid=projectid if projectid is not None else config.googleearthengine.projectid,
+            token=token if token is not None else config.googleearthengine.token,
+        ),
+    )
+
+
 def default_sources_yaml_path(repo_root: str | Path) -> Path:
     return Path(repo_root) / "resources" / "sources.yaml"

@@ -6,6 +6,10 @@
 * https://github.com/geo-di-lab
 
 
+#### quick start
+* run `.venv/bin/python -m uvicorn backend.src.api.main:app --reload --host 127.0.0.1 --port 8000` to start the backend
+* verify using `curl http://127.0.0.1:8000/health`
+* run `npm run dev -- --host 127.0.0.1 --port 5173` to start the frontend
 
 #### main references..
 * https://geo-di-lab.github.io/emerge-lessons/intro.html

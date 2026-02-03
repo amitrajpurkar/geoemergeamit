@@ -27,3 +27,23 @@
 
 ## review
 * review the code changes made so far
+
+## speckit.implement
+* first change the sources.yaml to remove googleearthengine.token and add this property to a new env/local-auth.yaml file; also add ".cached" to gitignore for this project; Also incorporate all dependencies needed in any imports, packaging at root level so that project can be run under uvicorn cleanly
+* also move from sources.yaml the property googleearthengine.projectid to the env/local-auth.yaml file alongside the token
+* implement all tasks under User Story 1, Phase 3
+
+## review
+* review the code changes made so far
+
+## ask AI to run the application and verify that it works
+* verify if the backend dependencies and packages are available in UVICORN; verify if the frontend dependencies and packages are available in VITE; verify if the application can be run successfully
+* i have run npm install under frontend/ and it completed successfully; now try to run the application and verify that it works;
+* manually verify that the application is running.
+* i just verified both backend and frontend; do stop both now; also let me know the commands for starting both frontend and backend so that i can run them from a separate terminal session
+* NOTE: these prompts are not using speckit slash commands; these are directed to AI Code Assistant.
+
+## manually run backend and frontend... outside AI Code Assistant
+* run backend using `.venv/bin/python -m uvicorn backend.src.api.main:app --reload --host 127.0.0.1 --port 8000`
+* run frontend using `npm run dev -- --host 127.0.0.1 --port 5173`
+* verify that both are running successfully

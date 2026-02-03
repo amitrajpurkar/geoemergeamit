@@ -1,10 +1,6 @@
 # Python-generated files
 __pycache__/
 *.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
 
 # Virtual environments
 .venv
@@ -12,3 +8,9 @@ wheels/
 # custom additions
 notebooks/ndvi.gif
 
+# local auth / env
+env/local-auth.yaml
+
+# caches
+.cache/
+.cached

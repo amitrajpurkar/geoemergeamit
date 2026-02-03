@@ -73,20 +73,20 @@ description: "Task list for Mosquito Risk Dashboard implementation"
 
 ### Tests for User Story 1
 
-- [ ] T027 [P] [US1] Add API contract test for GET /api/risk/default in backend/tests/integration/test_api_risk_default.py
-- [ ] T028 [P] [US1] Add unit tests for risk classification thresholds (Low/Med/High) in backend/tests/unit/test_risk_classification.py
+- [X] T027 [P] [US1] Add API contract test for GET /api/risk/default in backend/tests/integration/test_api_risk_default.py
+- [X] T028 [P] [US1] Add unit tests for risk classification thresholds (Low/Med/High) in backend/tests/unit/test_risk_classification.py
 
 ### Implementation for User Story 1
 
-- [ ] T029 [US1] Implement RiskService default-window orchestration in backend/src/services/risk_service.py
-- [ ] T030 [US1] Implement Florida geometry loader from configured dataset in backend/src/infra/regions.py
-- [ ] T031 [US1] Implement risk layer computation from EE image sets (NDVI/LST/precip) in backend/src/eda/risk_mapping.py
-- [ ] T032 [US1] Implement GET /api/risk/default endpoint in backend/src/api/routes/risk.py
-- [ ] T033 [US1] Implement backend response schema (RiskLayerResponse) in backend/src/api/schemas.py
-- [ ] T034 [P] [US1] Create frontend API client for default risk in frontend/src/services/api.ts
-- [ ] T035 [P] [US1] Create Leaflet map component supporting raster tile overlays in frontend/src/components/RiskMap.tsx
-- [ ] T036 [US1] Create home page rendering two RiskMap panels in frontend/src/pages/Home.tsx
-- [ ] T037 [US1] Add legend UI (Low/Med/High) with clear labels in frontend/src/components/RiskLegend.tsx
+- [X] T029 [US1] Implement RiskService default-window orchestration in backend/src/services/risk_service.py
+- [X] T030 [US1] Implement Florida geometry loader from configured dataset in backend/src/infra/regions.py
+- [X] T031 [US1] Implement risk layer computation from EE image sets (NDVI/LST/precip) in backend/src/eda/risk_mapping.py
+- [X] T032 [US1] Implement GET /api/risk/default endpoint in backend/src/api/routes/risk.py
+- [X] T033 [US1] Implement backend response schema (RiskLayerResponse) in backend/src/api/schemas.py
+- [X] T034 [P] [US1] Create frontend API client for default risk in frontend/src/services/api.ts
+- [X] T035 [P] [US1] Create Leaflet map component supporting raster tile overlays in frontend/src/components/RiskMap.tsx
+- [X] T036 [US1] Create home page rendering two RiskMap panels in frontend/src/pages/Home.tsx
+- [X] T037 [US1] Add legend UI (Low/Med/High) with clear labels in frontend/src/components/RiskLegend.tsx
 
 **Checkpoint**: User Story 1 is fully functional and independently testable.
 

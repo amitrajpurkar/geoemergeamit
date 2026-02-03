@@ -10,7 +10,7 @@ from backend.src.domain.errors import DataUnavailableError
 class TileUrlTemplate:
     url: str
 
-
+# TODO: at some point, we should validate the url is NOT logged; as it can leak the token value
 def ee_image_tile_url_template(image: Any, vis_params: dict[str, Any]) -> TileUrlTemplate:
     try:
         map_id = image.getMapId(vis_params)

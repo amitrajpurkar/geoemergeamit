@@ -22,6 +22,7 @@ def _sha256(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+# TODO: try streaming download to avoid loading entire file into memory
 def download_to_cache(url: str, cache: CachePaths, *, subdir: str = "datasets") -> Path:
     target_dir = cache.subdir(subdir)
     filename = Path(urllib.parse.urlparse(url).path).name or _sha256(url)
@@ -38,7 +39,7 @@ def download_to_cache(url: str, cache: CachePaths, *, subdir: str = "datasets") 
     except Exception as e:
         raise DataUnavailableError(f"Failed to download dataset from {url}") from e
 
-
+# TODO: try safe zip extraction to avoid path traversal attacks; zip-slip vulnerability
 def extract_zip(zip_path: Path, cache: CachePaths, *, subdir: str) -> Path:
     out_dir = cache.subdir(subdir)
     try:
