@@ -38,34 +38,34 @@ description: "Task list for Mosquito Risk Dashboard implementation"
 
 **Purpose**: Core infrastructure required by all user stories (datasets config, caching, Earth Engine adapter, geocoding adapter, validation, and reusable EDA methods).
 
-**⚠️ CRITICAL**: No user story work can begin until this phase is complete.
+ **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
 - [X] T010 Implement `resources/sources.yaml` loader in backend/src/infra/sources.py
 - [X] T011 Implement filesystem cache layout and helpers in backend/src/infra/cache.py
-- [ ] T012 Implement dataset download/extract utilities (zip + geojson) in backend/src/infra/datasets.py
-- [ ] T013 Add dataset EDA summary utilities (schema, missingness, basic stats) in backend/src/eda/data_exploration.py
-- [ ] T014 Add visualization helpers contract (no decorative charts; clear labels/captions) in backend/src/eda/visualization.py
-- [ ] T015 Implement Earth Engine initialization adapter in backend/src/infra/ee_client.py (no tokens logged)
-- [ ] T016 Implement Folium/Leaflet tile URL generation helper (EE getMapId wrapper) in backend/src/infra/ee_tiles.py
-- [ ] T017 Implement geocoding interface + stub adapter in backend/src/infra/geocoding.py
-- [ ] T018 Implement domain models for Location/DateRange/RiskBand in backend/src/domain/models.py
-- [ ] T019 Implement input validation helpers (date range, empty strings) in backend/src/domain/validation.py
-- [ ] T020 Add domain exceptions (e.g., InvalidLocationError, InvalidDateRangeError, DataUnavailableError) in backend/src/domain/errors.py
-- [ ] T021 Add structured logging setup for backend in backend/src/infra/logging.py
-- [ ] T022 Add FastAPI app factory in backend/src/api/app.py
-- [ ] T023 Add API error handlers mapping domain errors to 400/404/500 in backend/src/api/errors.py
+- [X] T012 Implement dataset download/extract utilities (zip + geojson) in backend/src/infra/datasets.py
+- [X] T013 Add dataset EDA summary utilities (schema, missingness, basic stats) in backend/src/eda/data_exploration.py
+- [X] T014 Add visualization helpers contract (no decorative charts; clear labels/captions) in backend/src/eda/visualization.py
+- [X] T015 Implement Earth Engine initialization adapter in backend/src/infra/ee_client.py (no tokens logged)
+- [X] T016 Implement Folium/Leaflet tile URL generation helper (EE getMapId wrapper) in backend/src/infra/ee_tiles.py
+- [X] T017 Implement geocoding interface + stub adapter in backend/src/infra/geocoding.py
+- [X] T018 Implement domain models for Location/DateRange/RiskBand in backend/src/domain/models.py
+- [X] T019 Implement input validation helpers (date range, empty strings) in backend/src/domain/validation.py
+- [X] T020 Add domain exceptions (e.g., InvalidLocationError, InvalidDateRangeError, DataUnavailableError) in backend/src/domain/errors.py
+- [X] T021 Add structured logging setup for backend in backend/src/infra/logging.py
+- [X] T022 Add FastAPI app factory in backend/src/api/app.py
+- [X] T023 Add API error handlers mapping domain errors to 400/404/500 in backend/src/api/errors.py
 
 ### Tests for Foundational
 
-- [ ] T024 [P] Add unit tests for sources.yaml parsing in backend/tests/unit/test_sources.py
-- [ ] T025 [P] Add unit tests for DateRange validation in backend/tests/unit/test_validation.py
-- [ ] T026 [P] Add unit tests for RiskBand mapping and legend ordering in backend/tests/unit/test_risk_bands.py
+- [X] T024 [P] Add unit tests for sources.yaml parsing in backend/tests/unit/test_sources.py
+- [X] T025 [P] Add unit tests for DateRange validation in backend/tests/unit/test_validation.py
+- [X] T026 [P] Add unit tests for RiskBand mapping and legend ordering in backend/tests/unit/test_risk_bands.py
 
 **Checkpoint**: Foundation ready - user story implementation can now begin.
 
 ---
 
-## Phase 3: User Story 1 - View Default Mosquito Risk Maps (Priority: P1) 🎯 MVP
+## Phase 3: User Story 1 - View Default Mosquito Risk Maps (Priority: P1) 
 
 **Goal**: Home page shows two Florida-wide risk overlays (last 30 days and last 12 months) as categorical bands with a legend.
 

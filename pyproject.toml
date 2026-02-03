@@ -16,6 +16,8 @@ dependencies = [
   "scipy",
   "pytest",
   "pyyaml",
+  "fastapi",
+  "uvicorn",
 ]
 
 [tool.pytest.ini_options]
