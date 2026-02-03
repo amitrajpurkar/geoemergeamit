@@ -51,3 +51,13 @@
 ## speckit.implement
 * implement all tasks under User Story 2, Phase 4
 
+## review
+* review the code changes made so far: only record the recommendations below
+  * P1: Fix UX mismatch on the two panels after a query (titles and/or behavior).
+  * P1: Add minimal validation for location_text in RiskQueryRequestSchema.
+  * P2: Move ee.Geometry(...) conversion out of RiskService into infra.
+  * P2: Add caching/rate-limit protection for geocoding.
+  * P3: Safe zip extraction + streaming dataset download.
+
+## speckit.specify
+* update user story 2 from specs.md to include that when user enters zipcode and date range, the application should apply the mosqito risk data for an area within 100 miles radius of that zipcode; also include that the application should show the mosqito risk data in both charts along with Land-surface-temperature, land-coverage and precipitation data; after updating specs.md also update plan.md and tasks.md accordingly

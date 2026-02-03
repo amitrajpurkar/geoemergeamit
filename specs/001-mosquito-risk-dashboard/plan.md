@@ -13,6 +13,12 @@
  MVP home page shows two default Florida-wide risk overlays:
  last 30 days and last 12 months.
  Users can also enter a City/ZIP and date range to refresh risk overlays.
+ For ZIP code (or point-resolved) queries, analysis uses an area within a
+ 100-mile radius of the resolved point.
+
+ Home page map panels support viewing mosquito risk alongside environmental
+ layers (land-surface temperature, land coverage, precipitation) for the same
+ location/date range.
  
  A second page shows environmental driver tiles (2-year window): vegetation cover,
  temperature, and precipitation/standing water.

@@ -94,9 +94,13 @@ description: "Task list for Mosquito Risk Dashboard implementation"
 
 ## Phase 4: User Story 2 - Explore Risk by Location and Date Range (Priority: P2)
 
-**Goal**: User can input City/ZIP and date range on home page and refresh overlays.
+**Goal**: User can input City/ZIP and date range on home page and refresh overlays. ZIP/point-based
+queries analyze an area within a 100-mile radius. Both charts can show mosquito risk alongside
+land-surface temperature, land coverage, and precipitation layers.
 
-**Independent Test**: On home page, enter a City/ZIP + date range; submit; verify overlays update or show a clear validation error.
+**Independent Test**: On home page, enter a ZIP + date range; submit; verify overlays update to the 100-mile
+radius area or show a clear validation error. Verify both charts allow viewing mosquito risk, land-surface
+temperature, land coverage, and precipitation layers for the same location/date range.
 
 ### Tests for User Story 2
 
@@ -112,6 +116,10 @@ description: "Task list for Mosquito Risk Dashboard implementation"
 - [X] T044 [P] [US2] Add home page form UI (City/ZIP + date range) in frontend/src/components/RiskQueryForm.tsx
 - [X] T045 [US2] Wire form submission to API and update both map panels in frontend/src/pages/Home.tsx
 - [X] T046 [US2] Add loading/empty/error states to Home page in frontend/src/pages/Home.tsx
+- [ ] T064 [US2] Adjust query region derivation to enforce 100-mile radius for ZIP/point-based queries in backend/src/services/risk_service.py
+- [ ] T065 [US2] Extend backend response to support multiple overlay layers (risk + LST + land cover + precipitation) for /api/risk/default and /api/risk/query (new response schema + service changes)
+- [ ] T066 [US2] Update frontend map panels to allow switching between overlay layers (risk/LST/land cover/precip) in frontend/src/components/RiskMap.tsx and frontend/src/pages/Home.tsx
+- [ ] T067 [P] [US2] Add integration test coverage for 100-mile radius behavior (mock geocoder point result) in backend/tests/integration/test_api_risk_query.py
 
 **Checkpoint**: User Story 2 works independently (even if US3 is not implemented).
 

@@ -46,12 +46,22 @@ the correct default time windows.
  
 As a user, I can choose a location and a date range on the home page and refresh
 the displayed risk maps to match my selections.
+
+When I enter a ZIP code, the application analyzes an area within a 100-mile
+radius of that ZIP code.
+
+The application also allows me to view mosquito risk alongside environmental
+layers (land-surface temperature, land coverage, and precipitation) on the same
+map panels.
  
 **Why this priority**: Enables analysis beyond a single default view and makes the
 application useful for other locations/time windows.
  
 **Independent Test**: Can be tested by selecting a different location and date
-range and verifying both charts update to match the selections.
+range and verifying both charts update to match the selections. When using a ZIP
+code, verify the map reflects the 100-mile analysis radius. Verify that mosquito
+risk, land-surface temperature, land coverage, and precipitation layers are
+available on both charts.
  
 **Acceptance Scenarios**:
  
@@ -59,6 +69,13 @@ range and verifying both charts update to match the selections.
   **Then** both charts update to show risk for the selected location.
 2. **Given** the home page is loaded, **When** I select a custom date range and
   submit, **Then** both charts update to reflect the chosen date range.
+3. **Given** the home page is loaded, **When** I enter a ZIP code and submit,
+  **Then** the system analyzes and displays results for an area within a 100-mile
+  radius of that ZIP code.
+4. **Given** results are displayed for a location/date range, **When** I switch
+  the visible overlay layer on either chart, **Then** I can view mosquito risk,
+  land-surface temperature, land coverage, and precipitation for the same
+  location/date range.
 
 ---
 
@@ -148,6 +165,16 @@ and verifying three tiles render with the expected two-year window.
   ZIP code) and resolve it to a geographic area for analysis.
   The system MUST still default the home page to the statewide Florida view when no
   user input is provided.
+- **FR-013**: When the user enters a ZIP code (or a location that resolves to a
+  point), the system MUST analyze an area within a 100-mile radius of that point.
+  For locations that resolve to polygons (e.g., administrative boundaries), the
+  system SHOULD analyze the polygon geometry directly.
+- **FR-014**: The home page MUST allow the user to view, on each of the two map
+  panels, mosquito risk alongside environmental layers for the same
+  location/date range:
+  - Land-surface temperature
+  - Land coverage
+  - Precipitation
 
 ### Key Entities *(include if feature involves data)*
  
