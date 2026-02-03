@@ -15,3 +15,6 @@ googleearthengine:
 # google earth engine datasets
 eeimagesets:
   vegetation: "COPERNICUS/S2_SR_HARMONIZED"
+  land_surface_temperature: "MODIS/061/MOD11A1"
+  precipitation: "UCSB-CHG/CHIRPS/DAILY"
+  land_cover: "USFS/GTAC/LCMS/v2024-10"

@@ -40,8 +40,8 @@ description: "Task list for Mosquito Risk Dashboard implementation"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T010 Implement `resources/sources.yaml` loader in backend/src/infra/sources.py
-- [ ] T011 Implement filesystem cache layout and helpers in backend/src/infra/cache.py
+- [X] T010 Implement `resources/sources.yaml` loader in backend/src/infra/sources.py
+- [X] T011 Implement filesystem cache layout and helpers in backend/src/infra/cache.py
 - [ ] T012 Implement dataset download/extract utilities (zip + geojson) in backend/src/infra/datasets.py
 - [ ] T013 Add dataset EDA summary utilities (schema, missingness, basic stats) in backend/src/eda/data_exploration.py
 - [ ] T014 Add visualization helpers contract (no decorative charts; clear labels/captions) in backend/src/eda/visualization.py
