@@ -47,3 +47,7 @@
 * run backend using `.venv/bin/python -m uvicorn backend.src.api.main:app --reload --host 127.0.0.1 --port 8000`
 * run frontend using `npm run dev -- --host 127.0.0.1 --port 5173`
 * verify that both are running successfully
+
+## speckit.implement
+* implement all tasks under User Story 2, Phase 4
+

@@ -11,6 +11,11 @@ class DateRangeSchema(BaseModel):
     end_date: date
 
 
+class RiskQueryRequestSchema(BaseModel):
+    location_text: str
+    date_range: DateRangeSchema
+
+
 class RiskBandSchema(BaseModel):
     code: str
     label: str

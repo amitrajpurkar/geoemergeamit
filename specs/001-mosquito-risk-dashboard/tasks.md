@@ -100,18 +100,18 @@ description: "Task list for Mosquito Risk Dashboard implementation"
 
 ### Tests for User Story 2
 
-- [ ] T038 [P] [US2] Add API contract test for POST /api/risk/query in backend/tests/integration/test_api_risk_query.py
-- [ ] T039 [P] [US2] Add unit tests for geocoding adapter error behavior in backend/tests/unit/test_geocoding.py
+- [X] T038 [P] [US2] Add API contract test for POST /api/risk/query in backend/tests/integration/test_api_risk_query.py
+- [X] T039 [P] [US2] Add unit tests for geocoding adapter error behavior in backend/tests/unit/test_geocoding.py
 
 ### Implementation for User Story 2
 
-- [ ] T040 [US2] Implement POST /api/risk/query endpoint in backend/src/api/routes/risk.py
-- [ ] T041 [US2] Implement request schema (RiskQueryRequest) validation in backend/src/api/schemas.py
-- [ ] T042 [US2] Implement geocoding adapter (city/zip -> geometry) in backend/src/infra/geocoding.py
-- [ ] T043 [US2] Implement RiskService query flow using geocoded Location + DateRange in backend/src/services/risk_service.py
-- [ ] T044 [P] [US2] Add home page form UI (City/ZIP + date range) in frontend/src/components/RiskQueryForm.tsx
-- [ ] T045 [US2] Wire form submission to API and update both map panels in frontend/src/pages/Home.tsx
-- [ ] T046 [US2] Add loading/empty/error states to Home page in frontend/src/pages/Home.tsx
+- [X] T040 [US2] Implement POST /api/risk/query endpoint in backend/src/api/routes/risk.py
+- [X] T041 [US2] Implement request schema (RiskQueryRequest) validation in backend/src/api/schemas.py
+- [X] T042 [US2] Implement geocoding adapter (city/zip -> geometry) in backend/src/infra/geocoding.py
+- [X] T043 [US2] Implement RiskService query flow using geocoded Location + DateRange in backend/src/services/risk_service.py
+- [X] T044 [P] [US2] Add home page form UI (City/ZIP + date range) in frontend/src/components/RiskQueryForm.tsx
+- [X] T045 [US2] Wire form submission to API and update both map panels in frontend/src/pages/Home.tsx
+- [X] T046 [US2] Add loading/empty/error states to Home page in frontend/src/pages/Home.tsx
 
 **Checkpoint**: User Story 2 works independently (even if US3 is not implemented).
 

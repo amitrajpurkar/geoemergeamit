@@ -2,18 +2,21 @@ import { useEffect, useState } from 'react'
 
 import { RiskLegend } from '../components/RiskLegend'
 import { RiskMap } from '../components/RiskMap'
-import { fetchDefaultRisk, type RiskLayerResponse } from '../services/api'
+import { RiskQueryForm, type RiskQuery } from '../components/RiskQueryForm'
+import { fetchDefaultRisk, fetchRiskQuery, type RiskLayerResponse } from '../services/api'
 
 export function Home() {
   const [month, setMonth] = useState<RiskLayerResponse | null>(null)
   const [year, setYear] = useState<RiskLayerResponse | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     let alive = true
 
     async function load() {
       try {
+        setLoading(true)
         setError(null)
         const [m, y] = await Promise.all([
           fetchDefaultRisk('last_30_days'),
@@ -25,6 +28,9 @@ export function Home() {
       } catch (e) {
         if (!alive) return
         setError(e instanceof Error ? e.message : 'Failed to load')
+      } finally {
+        if (!alive) return
+        setLoading(false)
       }
     }
 
@@ -34,6 +40,32 @@ export function Home() {
     }
   }, [])
 
+  async function onQuery(q: RiskQuery) {
+    if (!q.location_text.trim()) {
+      setError('Location is required')
+      return
+    }
+    if (!q.start_date || !q.end_date) {
+      setError('Start and end date are required')
+      return
+    }
+
+    try {
+      setLoading(true)
+      setError(null)
+      const layer = await fetchRiskQuery({
+        location_text: q.location_text,
+        date_range: { start_date: q.start_date, end_date: q.end_date }
+      })
+      setMonth(layer)
+      setYear(layer)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed to load')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const legend = month?.legend ?? year?.legend ?? []
 
   return (
@@ -42,6 +74,8 @@ export function Home() {
       <p style={{ marginTop: 0, color: '#444' }}>
         Default risk overlays for Florida: last 30 days and last 12 months.
       </p>
+
+      <RiskQueryForm onSubmit={onQuery} disabled={loading} />
 
       {error ? <div className="error">{error}</div> : null}
 
