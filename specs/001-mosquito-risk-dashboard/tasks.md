@@ -120,6 +120,9 @@ temperature, land coverage, and precipitation layers for the same location/date 
 - [X] T065 [US2] Extend backend response to support multiple overlay layers (risk + LST + land cover + precipitation) for /api/risk/default and /api/risk/query (new response schema + service changes)
 - [X] T066 [US2] Update frontend map panels to allow switching between overlay layers (risk/LST/land cover/precip) in frontend/src/components/RiskMap.tsx and frontend/src/pages/Home.tsx
 - [X] T067 [P] [US2] Add integration test coverage for 100-mile radius behavior (mock geocoder point result) in backend/tests/integration/test_api_risk_query.py
+
+- [X] T073 [US2] Add viewport metadata to POST /api/drivers response (center + radius) and use it to center driver mini-maps (remove hardcoded Florida center) in backend/src/services/drivers_service.py, backend/src/api/schemas.py, frontend/src/components/DriverTile.tsx
+- [X] T074 [US3] Fix Drivers page query context behavior: make date range explicit/editable on Drivers page and ensure changing location does not silently reuse stale initialQuery date range in frontend/src/pages/Drivers.tsx and frontend/src/services/api.ts
 - [X] T068 [US2] Fix home page UX mismatch after a query by updating panel titles and/or behavior to reflect the queried location/date range in frontend/src/pages/Home.tsx
 - [X] T069 [US2] Add minimal API-level validation for RiskQueryRequestSchema.location_text (e.g., non-empty/trimmed + max length) in backend/src/api/schemas.py
 
@@ -135,20 +138,20 @@ temperature, land coverage, and precipitation layers for the same location/date 
 
 ### Tests for User Story 3
 
-- [ ] T047 [P] [US3] Add API contract test for POST /api/drivers in backend/tests/integration/test_api_drivers.py
+- [X] T047 [P] [US3] Add API contract test for POST /api/drivers in backend/tests/integration/test_api_drivers.py
 
 ### Implementation for User Story 3
 
-- [ ] T048 [US3] Implement DriversService orchestration in backend/src/services/drivers_service.py
-- [ ] T049 [US3] Implement vegetation drivers (NDVI/NDWI summary) in backend/src/eda/drivers_vegetation.py
-- [ ] T050 [US3] Implement temperature drivers (LST summary) in backend/src/eda/drivers_temperature.py
-- [ ] T051 [US3] Implement precipitation/standing water drivers (CHIRPS + NDWI proxy) in backend/src/eda/drivers_precip_water.py
-- [ ] T052 [US3] Implement POST /api/drivers endpoint in backend/src/api/routes/drivers.py
-- [ ] T053 [US3] Implement DriversResponse schema in backend/src/api/schemas.py
-- [ ] T054 [P] [US3] Add frontend API client for drivers in frontend/src/services/api.ts
-- [ ] T055 [P] [US3] Implement driver tiles UI in frontend/src/components/DriverTile.tsx
-- [ ] T056 [US3] Implement drivers page in frontend/src/pages/Drivers.tsx
-- [ ] T057 [US3] Add navigation link from home page to drivers page in frontend/src/pages/Home.tsx
+- [X] T048 [US3] Implement DriversService orchestration in backend/src/services/drivers_service.py
+- [X] T049 [US3] Implement vegetation drivers (NDVI/NDWI summary) in backend/src/eda/drivers_vegetation.py
+- [X] T050 [US3] Implement temperature drivers (LST summary) in backend/src/eda/drivers_temperature.py
+- [X] T051 [US3] Implement precipitation/standing water drivers (CHIRPS + NDWI proxy) in backend/src/eda/drivers_precip_water.py
+- [X] T052 [US3] Implement POST /api/drivers endpoint in backend/src/api/routes/drivers.py
+- [X] T053 [US3] Implement DriversResponse schema in backend/src/api/schemas.py
+- [X] T054 [P] [US3] Add frontend API client for drivers in frontend/src/services/api.ts
+- [X] T055 [P] [US3] Implement driver tiles UI in frontend/src/components/DriverTile.tsx
+- [X] T056 [US3] Implement drivers page in frontend/src/pages/Drivers.tsx
+- [X] T057 [US3] Add navigation link from home page to drivers page in frontend/src/pages/Home.tsx
 
 **Checkpoint**: User Story 3 is independently functional.
 
@@ -167,6 +170,10 @@ temperature, land coverage, and precipitation layers for the same location/date 
 - [ ] T070 [US2] Move Earth Engine geometry conversion and buffering logic out of backend/src/services/risk_service.py into an infra adapter (e.g., backend/src/infra/ee_geometry.py) and keep RiskService orchestration-focused
 - [ ] T071 [US2] Add caching and basic rate-limit protection for geocoding requests (e.g., TTL cache keyed by normalized location_text + simple retry/backoff on 429/5xx) in backend/src/infra/geocoding.py
 - [ ] T072 Harden dataset download/extraction: safe zip extraction and streaming downloads to reduce memory usage in backend/src/infra/datasets.py
+
+- [X] T075 [US3] Improve Sentinel-2 vegetation/water composites by applying cloud masking before NDVI/NDWI generation in backend/src/services/drivers_service.py
+- [X] T076 [US3] Improve precipitation visualization scaling based on window length and add dataset attribution strings to driver tiles in backend/src/services/drivers_service.py, backend/src/api/schemas.py, frontend/src/services/api.ts, frontend/src/components/DriverTile.tsx
+- [X] T077 [US3] Align DriversResponse contract: ensure date_range is always present (or update frontend typing to match) in backend/src/api/schemas.py and frontend/src/services/api.ts
 
 ---
 

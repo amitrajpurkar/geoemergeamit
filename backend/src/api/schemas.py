@@ -59,4 +59,35 @@ class ErrorResponseSchema(BaseModel):
     detail: str = Field(..., description="Human-readable error")
 
 
+class DriversRequestSchema(BaseModel):
+    location_text: str = Field(..., max_length=200)
+    date_range: DateRangeSchema | None = None
+
+    @field_validator("location_text")
+    @classmethod
+    def _validate_location_text(cls, v: str) -> str:
+        if not isinstance(v, str):
+            raise ValueError("location_text must be a string")
+        vv = v.strip()
+        if not vv:
+            raise ValueError("location_text is required")
+        return vv
+
+
+class DriverTileSchema(BaseModel):
+    driver_type: str
+    title: str
+    summary: str
+    metrics: dict[str, Any] | None = None
+    tile_url_template: str | None = None
+    attribution: str | None = None
+
+
+class DriversResponseSchema(BaseModel):
+    location_label: str
+    date_range: DateRangeSchema
+    tiles: list[DriverTileSchema]
+    viewport: ViewportSchema | None = None
+
+
 JsonObject = dict[str, Any]

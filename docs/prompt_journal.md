@@ -75,3 +75,7 @@
 
 ## speckit.implement
 * implement newly added tasks under Phase 4
+* implement all tasks under Phase 5
+
+## review (and verify)
+* run and verify the application; the layers for vegetation, temperature, precipitation, and mosquito risk are still not showing on the charts
