@@ -46,7 +46,9 @@ Expected:
 From repo root:
 
 ```bash
-# placeholder: frontend bootstrapping will be defined in implementation
+cd frontend
+npm install
+npm run dev -- --host 127.0.0.1 --port 5173
 ```
 
 Expected:
@@ -56,6 +58,29 @@ Expected:
 
 ## Smoke Test
 
-- Load home page: verify 2 map overlays are visible.
-- Submit City/ZIP + date range: verify overlays refresh or show an actionable error.
-- Open drivers page: verify 3 tiles render for given location.
+- Backend health:
+
+```bash
+curl -s http://127.0.0.1:8000/health
+```
+
+- Risk query (example):
+
+```bash
+curl -s -X POST http://127.0.0.1:8000/api/risk/query \
+  -H 'content-type: application/json' \
+  -d '{"location_text":"33101","date_range":{"start_date":"2025-01-01","end_date":"2025-02-01"}}'
+```
+
+- Drivers query (example):
+
+```bash
+curl -s -X POST http://127.0.0.1:8000/api/drivers \
+  -H 'content-type: application/json' \
+  -d '{"location_text":"33101","date_range":{"start_date":"2025-01-01","end_date":"2025-02-01"}}'
+```
+
+- UI:
+  - Load `http://127.0.0.1:5173/` and verify 2 map overlays are visible.
+  - Submit City/ZIP + date range: verify overlays refresh or show an actionable error.
+  - Open drivers page: verify tiles render and mini-maps center on the queried location.

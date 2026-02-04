@@ -11,7 +11,7 @@
 ## speckit.constitution
 * this application is a python application with frontend and backend uses EDA to show mosquito risk for a given location and date range; the constitution guidelines for a senior python developer is documented in AGENTS.md; the skills for python code review and EDA analysis are documented in respective folders under ./.windsurf/skills/ under the projects root folder; As a senior python developer, use the guidelines from AGENTS.md as well as the skills from ./.windsurf/skills/ to guide your work; 
 
-## speckit.specify
+## speckit.specify -- 2026-02-02
 * Create a python application with frontend and backend. The application uses EDA to show mosquito risk for a given location and date range; as first feature, extract the data exploration and analysis methods from the jupyter notebooks which are under ./notebooks/ folder; modularize these methods so that these can be re-used in the backend service classes; as second feature, when the application runs, on the home page it should show two charts; one being the mosquito risk for a default location (state of florida) and first chart showing the risk overlayed on a map for last month (last 30 days) and second chart showing the risk overlayed on a map for last year (last 12 months); as third feature, on the top of the home page above these two charts, it should show form elements to select a location and date range; as fourth feature, provide a link to another page, which takes as input a location and shows three tiles; first tile should show vegetation cover changes over last two years; second tile showing temperature changes over last two years; third tile showing precipitation changes and standing water changes over last two years
 
 ## speckit.plan
@@ -20,10 +20,10 @@
 ## speckit.tasks
 * prepare a task list to implement the specifications in spec.md; make use of AGENTS.md located in the root folder of this project to guide your work; make use of Skills located in ./.windsurf/skills/ to guide your work; especially for exploratory-data-analysis skill, make use of the data_exploration.md and visualization.md skills; 
 
-## speckit.implement
+## speckit.implement -- 2026-02-03
 * implement all tasks under phase 1 from tasks.md; make use of AGENTS.md located in the root folder of this project to guide your work; make use of Skills located in ./.windsurf/skills/ to guide your work; especially use the skill code-review as you implement the tasks; 
 * implement under Phase 2, only tasks T010, T011
-* implement remaining tasks under Phase 2
+* implement remaining tasks under Phase 2 -- 2026-02-03
 
 ## review
 * review the code changes made so far
@@ -79,3 +79,11 @@
 
 ## review (and verify)
 * run and verify the application; the layers for vegetation, temperature, precipitation, and mosquito risk are still not showing on the charts
+* stop the servers now and next work on wiring the real datasets for the drivers so that the raster layers can be seen
+* review the code changes and provide recommendations
+* implement the recommendations in P1 and P2 list shown above; use speckit.implement for this one.
+
+## speckit.implement -- 2026-02-04
+* implement all remaining tasks under Phase 6
+* review.. verify is all tasks listed in tasks.md are completed; check the entire code base of this project to see if adheres to the principles outlined under AGENTS.md located in the root folder of this application; after this review, list down the recommendations and add P1, P2 recommendations to tasks.md for subsequent action
+* run and verify the application; identify any issues, check if the application is correctly showing on the map the vegetation, temperature, precipitation, and mosquito risk layers; verify if google earth engine is correctly returning the vegetation, temperature, precipitation, and mosquito risk layers and if these are correctly being displayed on the map

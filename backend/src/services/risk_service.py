@@ -11,6 +11,7 @@ from backend.src.domain.validation import validate_date_range
 from backend.src.eda.risk_mapping import build_default_risk_image
 from backend.src.infra.ee_client import EarthEngineClient
 from backend.src.infra.ee_tiles import ee_image_tile_url_template
+from backend.src.infra.ee_geometry import region_and_viewport_from_location
 from backend.src.infra.geocoding import default_geocoder, location_from_geocoding
 from backend.src.infra.regions import florida_ee_geometry
 from backend.src.infra.sources import default_sources_yaml_path, load_sources_config, merge_local_auth_token
@@ -128,25 +129,10 @@ class RiskService:
 
         import ee  # type: ignore
 
-        geom_type = location.geometry.get("type") if isinstance(location.geometry, dict) else None
-        region: object
-        viewport: dict | None = None
-        if geom_type == "Point":
-            coords = location.geometry.get("coordinates")
-            if (
-                isinstance(coords, list)
-                and len(coords) == 2
-                and all(isinstance(x, (int, float)) for x in coords)
-            ):
-                lng = float(coords[0])
-                lat = float(coords[1])
-                radius_meters = 160_934.0
-                region = ee.Geometry.Point([lng, lat]).buffer(radius_meters).bounds()
-                viewport = {"center_lat": lat, "center_lng": lng, "radius_meters": radius_meters}
-            else:
-                region = ee.Geometry(location.geometry)
-        else:
-            region = ee.Geometry(location.geometry)
+        region, viewport = region_and_viewport_from_location(
+            location_geometry=location.geometry,
+            location_bbox=location.bbox,
+        )
 
         layers = self._layers(region=region, start=start_date, end=end_date, sources=sources)
         tile_url = layers[0]["tile_url_template"]

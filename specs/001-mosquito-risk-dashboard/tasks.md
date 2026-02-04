@@ -161,19 +161,25 @@ temperature, land coverage, and precipitation layers for the same location/date 
 
 **Purpose**: Improve reliability, reproducibility, and usability across all user stories.
 
-- [ ] T058 [P] Add documentation about clearing notebook outputs before commits in README.md
-- [ ] T059 Add backend request logging (without secrets) and correlation IDs in backend/src/infra/logging.py
-- [ ] T060 Add caching of dataset downloads and EE tile map IDs with TTL in backend/src/infra/cache.py
-- [ ] T061 Add rate limiting or basic request throttling in backend/src/api/middleware.py
-- [ ] T062 Add end-to-end smoke test script described in specs/001-mosquito-risk-dashboard/quickstart.md
-- [ ] T063 Run quickstart.md validation and update quickstart.md if steps diverge
-- [ ] T070 [US2] Move Earth Engine geometry conversion and buffering logic out of backend/src/services/risk_service.py into an infra adapter (e.g., backend/src/infra/ee_geometry.py) and keep RiskService orchestration-focused
-- [ ] T071 [US2] Add caching and basic rate-limit protection for geocoding requests (e.g., TTL cache keyed by normalized location_text + simple retry/backoff on 429/5xx) in backend/src/infra/geocoding.py
-- [ ] T072 Harden dataset download/extraction: safe zip extraction and streaming downloads to reduce memory usage in backend/src/infra/datasets.py
+- [X] T058 [P] Add documentation about clearing notebook outputs before commits in README.md
+- [X] T059 Add backend request logging (without secrets) and correlation IDs in backend/src/infra/logging.py
+- [X] T060 Add caching of dataset downloads and EE tile map IDs with TTL in backend/src/infra/cache.py
+- [X] T061 Add rate limiting or basic request throttling in backend/src/api/middleware.py
+- [X] T062 Add end-to-end smoke test script described in specs/001-mosquito-risk-dashboard/quickstart.md
+- [X] T063 Run quickstart.md validation and update quickstart.md if steps diverge
+- [X] T070 [US2] Move Earth Engine geometry conversion and buffering logic out of backend/src/services/risk_service.py into an infra adapter (e.g., backend/src/infra/ee_geometry.py) and keep RiskService orchestration-focused
+- [X] T071 [US2] Add caching and basic rate-limit protection for geocoding requests (e.g., TTL cache keyed by normalized location_text + simple retry/backoff on 429/5xx) in backend/src/infra/geocoding.py
+- [X] T072 Harden dataset download/extraction: safe zip extraction and streaming downloads to reduce memory usage in backend/src/infra/datasets.py
 
 - [X] T075 [US3] Improve Sentinel-2 vegetation/water composites by applying cloud masking before NDVI/NDWI generation in backend/src/services/drivers_service.py
 - [X] T076 [US3] Improve precipitation visualization scaling based on window length and add dataset attribution strings to driver tiles in backend/src/services/drivers_service.py, backend/src/api/schemas.py, frontend/src/services/api.ts, frontend/src/components/DriverTile.tsx
 - [X] T077 [US3] Align DriversResponse contract: ensure date_range is always present (or update frontend typing to match) in backend/src/api/schemas.py and frontend/src/services/api.ts
+
+- [ ] T078 [P1] Remove token-leakage footgun for EE tile URLs: ensure request logging cannot accidentally log `tile_url_template` values (e.g., add URL redaction helper + explicitly avoid logging response bodies containing `?token=`) and add a regression test
+- [ ] T079 [P1] Fix EE map-id caching effectiveness in backend/src/infra/ee_tiles.py by replacing `id(image)` cache keying with a stable image identity (and include vis params) so cache survives across requests
+- [ ] T080 [P1] Harden dataset downloads in backend/src/infra/datasets.py: add explicit timeouts, validate HTTP status, and reuse shared TTL helper (`is_fresh`) instead of ad-hoc mtime math
+- [ ] T081 [P2] Reduce rate limiter memory growth risk in backend/src/api/middleware.py: cap number of tracked clients / add periodic cleanup, and add unit tests for 429 behavior + cleanup
+- [ ] T082 [P2] Align docs references to agent principles: fix references to `AGENTS.md` to match actual filename (`AGENT.md`) in docs (e.g., docs/prompt_journal.md) to avoid drift
 
 ---
 

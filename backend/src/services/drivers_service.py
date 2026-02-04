@@ -9,6 +9,7 @@ from backend.src.domain.models import DateRange
 from backend.src.domain.validation import validate_date_range
 from backend.src.infra.ee_client import EarthEngineClient
 from backend.src.infra.ee_tiles import ee_image_tile_url_template
+from backend.src.infra.ee_geometry import region_and_viewport_from_location
 from backend.src.infra.geocoding import default_geocoder, location_from_geocoding
 from backend.src.infra.sources import default_sources_yaml_path, load_sources_config, merge_local_auth_token
 
@@ -51,34 +52,10 @@ class DriversService:
 
         import ee  # type: ignore
 
-        geom_type = location.geometry.get("type") if isinstance(location.geometry, dict) else None
-        if geom_type == "Point":
-            coords = location.geometry.get("coordinates")
-            if (
-                isinstance(coords, list)
-                and len(coords) == 2
-                and all(isinstance(x, (int, float)) for x in coords)
-            ):
-                center_lng = float(coords[0])
-                center_lat = float(coords[1])
-                region = ee.Geometry.Point([center_lng, center_lat]).buffer(160_934).bounds()
-            else:
-                region = ee.Geometry(location.geometry)
-                center_lat = None
-                center_lng = None
-        else:
-            region = ee.Geometry(location.geometry)
-            center_lat = None
-            center_lng = None
-
-        if center_lat is None or center_lng is None:
-            if location.bbox is not None:
-                minx, miny, maxx, maxy = location.bbox
-                center_lng = (minx + maxx) / 2.0
-                center_lat = (miny + maxy) / 2.0
-            else:
-                center_lat = 27.8
-                center_lng = -81.7
+        region, viewport = region_and_viewport_from_location(
+            location_geometry=location.geometry,
+            location_bbox=location.bbox,
+        )
 
         window_days = (end - start).days + 1
 
@@ -174,5 +151,5 @@ class DriversService:
             "location_label": location.label,
             "date_range": {"start_date": start, "end_date": end},
             "tiles": tiles,
-            "viewport": {"center_lat": center_lat, "center_lng": center_lng, "radius_meters": 160_934},
+            "viewport": viewport,
         }

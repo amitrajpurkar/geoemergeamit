@@ -56,6 +56,16 @@ paths:
                 $ref: '#/components/schemas/DriversResponse'
 components:
   schemas:
+    Viewport:
+      type: object
+      required: [center_lat, center_lng, radius_meters]
+      properties:
+        center_lat:
+          type: number
+        center_lng:
+          type: number
+        radius_meters:
+          type: number
     DateRange:
       type: object
       required: [start_date, end_date]
@@ -103,6 +113,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RiskBand'
+        layers:
+          type: array
+          items:
+            type: object
+            required: [layer_id, label, tile_url_template]
+            properties:
+              layer_id:
+                type: string
+              label:
+                type: string
+              tile_url_template:
+                type: string
+              attribution:
+                type: string
+        viewport:
+          $ref: '#/components/schemas/Viewport'
     DriversRequest:
       type: object
       required: [location_text]
@@ -110,6 +136,8 @@ components:
         location_text:
           type: string
           description: City name and/or ZIP code
+        date_range:
+          $ref: '#/components/schemas/DateRange'
     DriverTile:
       type: object
       required: [driver_type, title, summary]
@@ -127,13 +155,20 @@ components:
         tile_url_template:
           type: string
           nullable: true
+        attribution:
+          type: string
+          nullable: true
     DriversResponse:
       type: object
-      required: [location_label, tiles]
+      required: [location_label, date_range, tiles]
       properties:
         location_label:
           type: string
+        date_range:
+          $ref: '#/components/schemas/DateRange'
         tiles:
           type: array
           items:
             $ref: '#/components/schemas/DriverTile'
+        viewport:
+          $ref: '#/components/schemas/Viewport'

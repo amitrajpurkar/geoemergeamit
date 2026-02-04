@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import re
+import time
 from typing import Any
 
 import httpx
@@ -40,11 +41,22 @@ class NominatimGeocoder(Geocoder):
             params["countrycodes"] = "us"
         headers = {"User-Agent": "geoemerge/0.1 (local dev)"}
 
-        try:
-            resp = httpx.get(url, params=params, headers=headers, timeout=10.0)
-            resp.raise_for_status()
-        except Exception as e:
-            raise InvalidLocationError("Failed to geocode location") from e
+        last_exc: Exception | None = None
+        for attempt in range(3):
+            try:
+                resp = httpx.get(url, params=params, headers=headers, timeout=10.0)
+                if resp.status_code in {429, 500, 502, 503, 504}:
+                    raise httpx.HTTPStatusError("retryable", request=resp.request, response=resp)
+                resp.raise_for_status()
+                last_exc = None
+                break
+            except Exception as e:
+                last_exc = e
+                if attempt < 2:
+                    time.sleep(0.5 * (2**attempt))
+                    continue
+        if last_exc is not None:
+            raise InvalidLocationError("Failed to geocode location") from last_exc
 
         data: Any
         try:
@@ -76,7 +88,31 @@ class NominatimGeocoder(Geocoder):
 
 
 def default_geocoder() -> Geocoder:
-    return NominatimGeocoder()
+    return CachedGeocoder(NominatimGeocoder())
+
+
+class CachedGeocoder(Geocoder):
+    def __init__(self, inner: Geocoder, *, ttl_seconds: int = 60 * 60 * 24, max_entries: int = 256) -> None:
+        self._inner = inner
+        self._ttl_seconds = ttl_seconds
+        self._max_entries = max_entries
+        self._cache: dict[str, tuple[float, GeocodingResult]] = {}
+
+    def geocode(self, location_text: str) -> GeocodingResult:
+        key = location_text.strip().lower()
+        now = time.time()
+        cached = self._cache.get(key)
+        if cached is not None:
+            ts, res = cached
+            if (now - ts) <= self._ttl_seconds:
+                return res
+
+        res = self._inner.geocode(location_text)
+        if len(self._cache) >= self._max_entries:
+            oldest_key = min(self._cache.items(), key=lambda kv: kv[1][0])[0]
+            self._cache.pop(oldest_key, None)
+        self._cache[key] = (now, res)
+        return res
 
 
 def location_from_geocoding(id_: str, location_text: str, result: GeocodingResult) -> Location:

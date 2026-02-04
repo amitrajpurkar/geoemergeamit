@@ -6,10 +6,16 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.src.api.errors import register_error_handlers
 from backend.src.api.routes.drivers import router as drivers_router
 from backend.src.api.routes.risk import router as risk_router
+from backend.src.api.middleware import BasicRateLimitMiddleware, CorrelationIdMiddleware
+from backend.src.infra.logging import configure_logging
 
 
 def create_app() -> FastAPI:
+    configure_logging()
     app = FastAPI(title="Mosquito Risk Dashboard API", version="0.1.0")
+
+    app.add_middleware(CorrelationIdMiddleware)
+    app.add_middleware(BasicRateLimitMiddleware)
 
     app.add_middleware(
         CORSMiddleware,
