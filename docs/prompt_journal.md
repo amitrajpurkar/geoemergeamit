@@ -87,3 +87,5 @@
 * implement all remaining tasks under Phase 6
 * review.. verify is all tasks listed in tasks.md are completed; check the entire code base of this project to see if adheres to the principles outlined under AGENTS.md located in the root folder of this application; after this review, list down the recommendations and add P1, P2 recommendations to tasks.md for subsequent action
 * run and verify the application; identify any issues, check if the application is correctly showing on the map the vegetation, temperature, precipitation, and mosquito risk layers; verify if google earth engine is correctly returning the vegetation, temperature, precipitation, and mosquito risk layers and if these are correctly being displayed on the map
+* on verifying manually, i found that the application is not showing the vegetation, temperature, precipitation, and mosquito risk layers on the map; can you check the "likely remaining issues" you mentioned? check each of the three to see why the layers are not showing on the map
+* layers are now showing up; thanks for that; i do see further gaps for next steps; let me capture the code changes in git from the terminal outside this tool
