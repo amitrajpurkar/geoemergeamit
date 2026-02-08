@@ -36,3 +36,4 @@
 * jupyter nbconvert --clear-output --inplace your_notebook.ipynb
 * -- with above before git commit, always clear outputs from jupyter notebooks
 * -- recommended: add a pre-commit hook or CI check to prevent committing large notebook outputs
+* sample zip codes... 55350 hutchinson, mn; 46205 indianapolis, in; 33172 miami, fl

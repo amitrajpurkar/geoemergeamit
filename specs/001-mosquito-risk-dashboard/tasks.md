@@ -212,6 +212,25 @@ temperature, land coverage, and precipitation layers for the same location/date 
 - [X] T100 [P2] Update API response schemas in backend/src/api/schemas.py: add LegendCategorySchema and LayerLegendSchema, add optional legend field to OverlayLayerSchema and DriverTileSchema to support per-layer legend metadata (min, max, palette, units, categories)
 - [X] T101 [P2] Add integration tests in backend/tests/integration/test_layer_legends.py: verify that all four layers return appropriate legend metadata with correct min/max values, palette arrays, and units in API responses for both risk and driver endpoints
 
+### Phase 6f: Fix Flat Medium Risk Issue (Dynamic Risk Classification)
+
+**Root Cause**: Application returns constant medium risk (value=1) for all locations instead of pixel-wise classification. Analysis compared implementation against Jupyter notebook `./notebooks/geoemerge-v2.ipynb` (cells 7-8).
+
+**Critical Issues**:
+- RC1 [CRITICAL]: `build_default_risk_image()` uses `ee.Image.constant(1)` instead of conditional pixel-wise classification
+- RC2 [HIGH]: Regional mean calculations for LST and precipitation not implemented (needed as classification thresholds)
+- RC3 [HIGH]: Pixel-wise conditional logic missing (notebook uses `.lt()`, `.gt()`, `.And()`, `.Or()` for low/medium/high classification)
+- RC4 [MEDIUM]: Notebook uses client-side `.getInfo()` for means; application requires server-side Earth Engine operations
+- RC5 [MEDIUM]: Image bands not combined before classification (notebook uses `addBands()`)
+
+**Tasks**:
+- [X] T102 [P1][CRITICAL] Replace constant risk value with server-side pixel-wise classification in backend/src/eda/risk_mapping.py `build_default_risk_image()`: implement conditional logic using `ee.Image.lt()`, `ee.Image.gt()`, `ee.Image.And()`, `ee.Image.Or()` to classify each pixel as low (0), medium (1), or high (2) based on NDVI, LST, and precipitation thresholds matching notebook cell 8 algorithm
+- [X] T103 [P1][HIGH] Compute regional mean thresholds server-side in backend/src/eda/risk_mapping.py: calculate mean LST and precipitation over region using `ee.Image.reduceRegion()` with server-side operations (avoiding `.getInfo()` which triggers client-side execution), store results as ee.Number objects for use in conditional expressions
+- [X] T104 [P1][HIGH] Combine NDVI, LST, and precipitation bands into single image in backend/src/eda/risk_mapping.py: use `ee.Image.addBands()` to create unified image before classification, matching notebook pattern where `combined = ndvi.addBands(lst).addBands(rain)` enables pixel-aligned multi-band operations
+- [X] T105 [P2] Update risk classification logic to match notebook thresholds in backend/src/eda/risk_mapping.py: align conditional logic with notebook cell 8 - low_risk = `ndvi.lt(0).And(lst.lt(mean_lst)).And(rain.lt(mean_rain))`, med_risk = `ndvi.lte(0.3).Or(lst.eq(mean_lst)).Or(rain.eq(mean_rain))`, high_risk = `ndvi.gt(0.3).And(lst.gt(mean_lst)).And(rain.gt(mean_rain))`
+- [X] T106 [P2] Add integration test in backend/tests/integration/test_risk_variation.py: verify risk layer shows pixel variation (not constant), sample multiple pixels from different regions and assert non-uniform risk values (regression test for constant medium risk bug)
+- [X] T107 [P2] Add logging for regional statistics in backend/src/eda/risk_mapping.py: log calculated mean LST and precipitation values, log pixel count by risk category (low/medium/high) to enable debugging and verification of classification logic
+
 ---
 
 ## Dependencies & Execution Order

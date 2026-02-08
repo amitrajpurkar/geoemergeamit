@@ -111,3 +111,9 @@
 * implement each of the new tasks from phase 6e
 * on verifying manually, i am not able to see any legends on the home page; above the map, it only shows the label as "Layer Legends"; it does not show what different colors mean for each layer; can you verify and fix this issue;
 * the legends are showing up now; do stop both backend and frontend server so that i can commit the changes so far.
+
+## speckit.analyze
+* analyse the risk calculation logic implemented in the application; verify this against the risk calculation logic in the jupyter notebook "./notebooks/geoemerge-v2.ipynb"; find out why the application is showing a flat square of medium risk no mater which zip code you enter; document your findings and add each of these issues to tasks.md
+* implement -- execute each of the new tasks from phase 6f
+* the application is now working as expected; thanks for all iterations
+* analyze the entire code base of this application now; document the architecture and design of this application as a new markdown file under ./docs/architecture.md
