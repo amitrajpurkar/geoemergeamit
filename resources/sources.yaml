@@ -7,11 +7,15 @@ datasets:
   floridaboundaries: "https://github.com/geo-di-lab/emerge-lessons/raw/refs/heads/main/docs/data/florida_boundary.geojson"
 
 
-# google earth engine
-googleearthengine:
-  projectid: "anr-41793"
-  token: "4/1ASc3gC10Rr2sTMCixTQBluw7j0ERfTI5DtjdHlVClvQvsSleHKJT9la2wPI"
-
+ 
 # google earth engine datasets
 eeimagesets:
   vegetation: "COPERNICUS/S2_SR_HARMONIZED"
+  land_surface_temperature: "MODIS/061/MOD11A1"
+  precipitation: "UCSB-CHG/CHIRPS/DAILY"
+  land_cover: "USFS/GTAC/LCMS/v2024-10"
+
+# google earth engine configuration
+googleearthengine:
+  projectid: "anr-41793"
+  token: null

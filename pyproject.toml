@@ -14,4 +14,13 @@ dependencies = [
   "ipykernel",
   "geemap",
   "scipy",
+  "pytest",
+  "pyyaml",
+  "fastapi",
+  "uvicorn",
+  "httpx",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["backend/tests"]
+addopts = "-q"

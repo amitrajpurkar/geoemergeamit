@@ -1,0 +1,174 @@
+openapi: 3.0.3
+info:
+  title: Mosquito Risk Dashboard API
+  version: 0.1.0
+paths:
+  /api/risk/default:
+    get:
+      summary: Get default Florida risk overlays
+      parameters:
+        - in: query
+          name: window
+          required: true
+          schema:
+            type: string
+            enum: [last_30_days, last_12_months]
+      responses:
+        '200':
+          description: Risk overlay for the requested default window
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskLayerResponse'
+  /api/risk/query:
+    post:
+      summary: Get risk overlay for a user-provided location and date range
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RiskQueryRequest'
+      responses:
+        '200':
+          description: Risk overlay
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskLayerResponse'
+        '400':
+          description: Validation error (invalid location or date range)
+  /api/drivers:
+    post:
+      summary: Get environmental driver tiles for a location (2-year window)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DriversRequest'
+      responses:
+        '200':
+          description: Driver tiles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DriversResponse'
+components:
+  schemas:
+    Viewport:
+      type: object
+      required: [center_lat, center_lng, radius_meters]
+      properties:
+        center_lat:
+          type: number
+        center_lng:
+          type: number
+        radius_meters:
+          type: number
+    DateRange:
+      type: object
+      required: [start_date, end_date]
+      properties:
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+    RiskBand:
+      type: object
+      required: [code, label, color]
+      properties:
+        code:
+          type: string
+          enum: [low, medium, high]
+        label:
+          type: string
+        color:
+          type: string
+    RiskQueryRequest:
+      type: object
+      required: [location_text, date_range]
+      properties:
+        location_text:
+          type: string
+          description: City name and/or ZIP code
+        date_range:
+          $ref: '#/components/schemas/DateRange'
+    RiskLayerResponse:
+      type: object
+      required: [location_label, date_range, tile_url_template, legend]
+      properties:
+        location_label:
+          type: string
+        date_range:
+          $ref: '#/components/schemas/DateRange'
+        tile_url_template:
+          type: string
+          description: XYZ tile URL template for Leaflet
+        attribution:
+          type: string
+        legend:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskBand'
+        layers:
+          type: array
+          items:
+            type: object
+            required: [layer_id, label, tile_url_template]
+            properties:
+              layer_id:
+                type: string
+              label:
+                type: string
+              tile_url_template:
+                type: string
+              attribution:
+                type: string
+        viewport:
+          $ref: '#/components/schemas/Viewport'
+    DriversRequest:
+      type: object
+      required: [location_text]
+      properties:
+        location_text:
+          type: string
+          description: City name and/or ZIP code
+        date_range:
+          $ref: '#/components/schemas/DateRange'
+    DriverTile:
+      type: object
+      required: [driver_type, title, summary]
+      properties:
+        driver_type:
+          type: string
+          enum: [vegetation, temperature, precipitation, standing_water]
+        title:
+          type: string
+        summary:
+          type: string
+        metrics:
+          type: object
+          additionalProperties: true
+        tile_url_template:
+          type: string
+          nullable: true
+        attribution:
+          type: string
+          nullable: true
+    DriversResponse:
+      type: object
+      required: [location_label, date_range, tiles]
+      properties:
+        location_label:
+          type: string
+        date_range:
+          $ref: '#/components/schemas/DateRange'
+        tiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/DriverTile'
+        viewport:
+          $ref: '#/components/schemas/Viewport'
