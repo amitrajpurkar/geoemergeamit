@@ -29,14 +29,27 @@ def classify_risk_score(*, ndvi: float, lst_c: float, precip_mm: float) -> RiskB
     return RiskBandCode.high
 
 
-# TODO: implement end to end risk mapping using EE; MVP is defaulting to medium risk
 def build_default_risk_image(*, region: Any, start_date: date, end_date: date, sources: SourcesConfig):
-    # Minimal working EE layer for US1: a categorical constant image clipped to Florida.
-    # This keeps the tile pipeline real, while risk logic can be improved later.
     import ee  # type: ignore
+    import logging
 
-    _ = (start_date, end_date, sources)
+    from backend.src.domain.errors import DataUnavailableError
 
-    # 0=low, 1=medium, 2=high
-    image = ee.Image.constant(1).toInt()
-    return image.clip(region)
+    logger = logging.getLogger(__name__)
+
+    s2_id = sources.eeimagesets.get("vegetation")
+    lst_id = sources.eeimagesets.get("land_surface_temperature")
+    chirps_id = sources.eeimagesets.get("precipitation")
+
+    if not (s2_id and lst_id and chirps_id):
+        raise DataUnavailableError("Earth Engine image sets are not configured")
+
+    # TODO: Implement full risk classification logic once satellite data availability is verified
+    # For now, return a constant medium-risk image to ensure the application works
+    # The issue is that recent satellite data (last 30 days) may not be fully processed,
+    # causing empty ImageCollections that fail during server-side Earth Engine execution
+    logger.info(f"Building risk image for region {region} from {start_date} to {end_date}")
+    
+    risk = ee.Image.constant(1).toInt().clip(region).rename("Risk_Level")
+    
+    return risk

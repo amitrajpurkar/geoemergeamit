@@ -181,6 +181,28 @@ temperature, land coverage, and precipitation layers for the same location/date 
 - [ ] T081 [P2] Reduce rate limiter memory growth risk in backend/src/api/middleware.py: cap number of tracked clients / add periodic cleanup, and add unit tests for 429 behavior + cleanup
 - [ ] T082 [P2] Align docs references to agent principles: fix references to `AGENTS.md` to match actual filename (`AGENT.md`) in docs (e.g., docs/prompt_journal.md) to avoid drift
 
+### Phase 6b: Fix Flat Layer Rendering (Code Analysis Follow-up)
+
+- [X] T083 [P1] Replace RiskService environmental layer constant stubs with real Earth Engine ImageCollection queries: implement LST (MODIS/061/MOD11A1 with mean aggregation and Kelvin to Celsius conversion), precipitation (UCSB-CHG/CHIRPS/DAILY with sum aggregation), and NDVI (Sentinel-2 SR Harmonized with cloud masking and normalizedDifference) in backend/src/services/risk_service.py `_layers()` method, matching notebook cell 4 implementation
+- [X] T084 [P1] Implement real risk classification logic in backend/src/eda/risk_mapping.py `build_default_risk_image()`: compute NDVI, LST, and precipitation from Earth Engine ImageCollections, calculate regional mean thresholds via reduceRegion, apply pixel-wise classification using conditional logic (low/medium/high risk based on vegetation, temperature, and rainfall), matching notebook cells 7-8 implementation
+- [X] T085 [P1] Add NDVI computation and cloud masking helper to RiskService: implement `_mask_s2_clouds()` function using QA60 band bit masking (bits 10 and 11 for clouds and cirrus) and integrate NDVI calculation via normalizedDifference(['B8', 'B4']) in backend/src/services/risk_service.py, matching notebook cell 2 and DriversService pattern
+- [X] T086 [P2] Add integration test to verify non-constant pixel variation in generated tile layers: create test that fetches risk/LST/NDVI/precipitation tiles via API, samples multiple pixels from returned Earth Engine images, and asserts non-uniform values to prevent regression to constant stubs in backend/tests/integration/test_layer_variation.py
+
+### Phase 6c: Error Console Logging (User Error Visibility)
+
+- [X] T087 [P1] Create ErrorConsole component in frontend/src/components/ErrorConsole.tsx: implement component that displays error messages with interpreted user-friendly guidance (503 → "Earth Engine is not initialized", 500 → "Internal server error", 400 → "Bad request", 404 → "Resource not found"), shows last 5 lines of stack trace when available, and uses clear visual styling (red border, monospace font, positioned at top of page)
+- [X] T088 [P1] Integrate ErrorConsole into Home page (frontend/src/pages/Home.tsx): update error state to capture full Error objects (not just strings), replace simple error div with ErrorConsole component, preserve stack traces from API calls, and position error console at top of page above all other content
+- [X] T089 [P1] Integrate ErrorConsole into Drivers page (frontend/src/pages/Drivers.tsx): update error state to capture full Error objects, replace simple error div with ErrorConsole component, preserve stack traces from API calls, and position error console at top of page above form inputs
+
+### Phase 6d: Single Map View with Default Parameters (Simplification)
+
+- [ ] T090 [P1] Update backend default query parameters in backend/src/api/routers/risk.py: change default location from "Florida" to ZIP code "33172" and default date range from last_30_days/last_12_months to fixed range 2023-01-01 to 2024-12-31
+- [ ] T091 [P1] Update Home page to single map view in frontend/src/pages/Home.tsx: remove second map component, update layout to display single RiskMap component, update default form values to ZIP 33172 and date range 2023-01-01 to 2024-12-31
+- [ ] T092 [P1] Update Drivers page to single map view in frontend/src/pages/Drivers.tsx: ensure single map display for user-specified location and date range, update form handling to match new single map pattern
+- [ ] T093 [P2] Update API response schemas in backend/src/domain/schemas.py: ensure DriversResponse and related schemas support single map view (remove any dual-window artifacts if present)
+- [ ] T094 [P2] Add integration tests for default parameters in backend/tests/integration/test_api_risk_default.py: verify API returns correct response for default ZIP 33172 and date range 2023-01-01 to 2024-12-31
+- [ ] T095 [P2] Update frontend E2E tests (if present) to verify single map view on Home page loads with correct defaults (ZIP 33172, date range 2023-01-01 to 2024-12-31)
+
 ---
 
 ## Dependencies & Execution Order

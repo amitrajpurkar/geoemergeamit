@@ -10,13 +10,13 @@
  Build a Python web application (frontend + backend) that visualizes mosquito risk as
  categorical bands (Low/Med/High) overlaid on a map.
  
- MVP home page shows two default Florida-wide risk overlays:
- last 30 days and last 12 months.
- Users can also enter a City/ZIP and date range to refresh risk overlays.
+ MVP home page shows a single default risk overlay for ZIP code 33172 with date range
+ 2023-01-01 to 2024-12-31.
+ Users can also enter a City/ZIP and date range to refresh the risk overlay.
  For ZIP code (or point-resolved) queries, analysis uses an area within a
  100-mile radius of the resolved point.
 
- Home page map panels support viewing mosquito risk alongside environmental
+ Home page map panel supports viewing mosquito risk alongside environmental
  layers (land-surface temperature, land coverage, precipitation) for the same
  location/date range.
  

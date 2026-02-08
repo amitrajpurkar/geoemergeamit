@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { ErrorConsole } from '../components/ErrorConsole'
 import { RiskLegend } from '../components/RiskLegend'
 import { RiskMap } from '../components/RiskMap'
 import { RiskQueryForm, type RiskQuery } from '../components/RiskQueryForm'
@@ -14,7 +15,7 @@ export function Home({
 }) {
   const [month, setMonth] = useState<RiskLayerResponse | null>(null)
   const [year, setYear] = useState<RiskLayerResponse | null>(null)
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<Error | string | null>(null)
   const [loading, setLoading] = useState(false)
   const [monthLayerId, setMonthLayerId] = useState('risk')
   const [yearLayerId, setYearLayerId] = useState('risk')
@@ -37,7 +38,7 @@ export function Home({
         setMode('default')
       } catch (e) {
         if (!alive) return
-        setError(e instanceof Error ? e.message : 'Failed to load')
+        setError(e instanceof Error ? e : String(e))
       } finally {
         if (!alive) return
         setLoading(false)
@@ -74,7 +75,7 @@ export function Home({
       setMode('query')
       onQuerySuccess({ location_text: q.location_text, start_date: q.start_date, end_date: q.end_date })
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to load')
+      setError(e instanceof Error ? e : String(e))
     } finally {
       setLoading(false)
     }
@@ -113,7 +114,7 @@ export function Home({
 
       <RiskQueryForm onSubmit={onQuery} disabled={loading} />
 
-      {error ? <div className="error">{error}</div> : null}
+      <ErrorConsole error={error} />
 
       {legend.length ? <RiskLegend legend={legend} /> : null}
 

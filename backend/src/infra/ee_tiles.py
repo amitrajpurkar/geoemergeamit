@@ -2,10 +2,13 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import json
+import logging
 import time
 from typing import Any
 
 from backend.src.domain.errors import DataUnavailableError
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -38,8 +41,11 @@ def ee_image_tile_url_template(image: Any, vis_params: dict[str, Any]) -> TileUr
                 return TileUrlTemplate(url=url)
 
     try:
+        logger.info(f"Calling image.getMapId with vis_params: {vis_params}")
         map_id = image.getMapId(vis_params)
+        logger.info(f"getMapId returned: {type(map_id)}")
     except Exception as e:
+        logger.error(f"Failed to call image.getMapId: {e}", exc_info=True)
         raise DataUnavailableError("Failed to generate Earth Engine tile URL") from e
 
     # Prefer the canonical URL format when available. The Earth Engine Python API often

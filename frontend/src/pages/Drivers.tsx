@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { DriverTile } from '../components/DriverTile'
+import { ErrorConsole } from '../components/ErrorConsole'
 import { fetchDrivers, type DriversResponse } from '../services/api'
 
 export function Drivers({
@@ -14,7 +15,7 @@ export function Drivers({
   const [startDate, setStartDate] = useState(initialQuery?.start_date ?? '')
   const [endDate, setEndDate] = useState(initialQuery?.end_date ?? '')
   const [data, setData] = useState<DriversResponse | null>(null)
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<Error | string | null>(null)
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -31,7 +32,7 @@ export function Drivers({
         setData(resp)
       } catch (e) {
         if (!alive) return
-        setError(e instanceof Error ? e.message : 'Failed to load')
+        setError(e instanceof Error ? e : String(e))
       } finally {
         if (!alive) return
         setLoading(false)
@@ -53,7 +54,7 @@ export function Drivers({
       })
       setData(resp)
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to load')
+      setError(e instanceof Error ? e : String(e))
     } finally {
       setLoading(false)
     }
@@ -90,7 +91,7 @@ export function Drivers({
         </div>
       </div>
 
-      {error ? <div className="error">{error}</div> : null}
+      <ErrorConsole error={error} />
 
       <div className="grid" style={{ marginTop: 12 }}>
         {data?.tiles?.map((t) => (

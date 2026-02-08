@@ -7,7 +7,8 @@
 
 
 #### quick start
-* run `.venv/bin/python -m uvicorn backend.src.api.main:app --reload --host 127.0.0.1 --port 8000` to start the backend
+* run backend using `.venv/bin/python -m uvicorn backend.src.api.main:app --reload --host 127.0.0.1 --port 8000` 
+* or run backend using `uv run python -m backend`
 * verify using `curl http://127.0.0.1:8000/health`
 * run `npm run dev -- --host 127.0.0.1 --port 5173` to start the frontend
 * try this one `uv run python -m backend`
@@ -18,6 +19,7 @@
 * .. take the lessons from chapters 2 and 4.. and apply them to the data provided.. 
 * create a gogle earth engine account.. 
 * create a gogle earth engine project.. and register it.. anr-41793
+* something to try `earthengine authenticate` from terminal
 * https://console.cloud.google.com/home/dashboard?project=anr-41793&organizationId=0
 * my key/token... 4/1ASc3gC10Rr2sTMCixTQBluw7j0ERfTI5DtjdHlVClvQvsSleHKJT9la2wPI
 

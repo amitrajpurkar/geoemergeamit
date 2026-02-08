@@ -14,3 +14,8 @@ eeimagesets:
   land_surface_temperature: "MODIS/061/MOD11A1"
   precipitation: "UCSB-CHG/CHIRPS/DAILY"
   land_cover: "USFS/GTAC/LCMS/v2024-10"
+
+# google earth engine configuration
+googleearthengine:
+  projectid: "anr-41793"
+  token: null

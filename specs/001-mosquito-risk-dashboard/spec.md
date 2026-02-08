@@ -20,60 +20,60 @@
   - Demonstrated to users independently
 -->
 
-### User Story 1 - View Default Mosquito Risk Maps (Priority: P1)
+### User Story 1 - View Default Mosquito Risk Map (Priority: P1)
  
 As a user, I can open the application home page and immediately see mosquito risk
-overlaid on a map for Florida for two default time windows (last 30 days and last
-12 months).
+overlaid on a single map for a default location (ZIP code 33172) and a default
+date range (2023-01-01 to 2024-12-31).
  
 **Why this priority**: Provides immediate value and a working end-to-end experience
 without requiring configuration.
  
 **Independent Test**: Can be fully tested by loading the home page in a browser and
-verifying that two map-based charts are rendered with labels indicating Florida and
-the correct default time windows.
+verifying that a single map-based chart is rendered with the default ZIP code 33172
+and date range 2023-01-01 to 2024-12-31.
  
 **Acceptance Scenarios**:
  
 1. **Given** the application is running, **When** I load the home page, **Then** I
-  see a map-based risk chart for Florida for the last 30 days.
-2. **Given** the application is running, **When** I load the home page, **Then** I
-  see a map-based risk chart for Florida for the last 12 months.
+  see a single map-based risk chart for ZIP code 33172.
+2. **Given** the application is running, **When** I load the home page, **Then** the
+  map displays mosquito risk data for the date range 2023-01-01 to 2024-12-31.
 
 ---
 
 ### User Story 2 - Explore Risk by Location and Date Range (Priority: P2)
  
 As a user, I can choose a location and a date range on the home page and refresh
-the displayed risk maps to match my selections.
+the displayed risk map to match my selections.
 
 When I enter a ZIP code, the application analyzes an area within a 100-mile
 radius of that ZIP code.
 
 The application also allows me to view mosquito risk alongside environmental
 layers (land-surface temperature, land coverage, and precipitation) on the same
-map panels.
+map.
  
 **Why this priority**: Enables analysis beyond a single default view and makes the
 application useful for other locations/time windows.
  
 **Independent Test**: Can be tested by selecting a different location and date
-range and verifying both charts update to match the selections. When using a ZIP
+range and verifying the single map updates to match the selections. When using a ZIP
 code, verify the map reflects the 100-mile analysis radius. Verify that mosquito
 risk, land-surface temperature, land coverage, and precipitation layers are
-available on both charts.
+available on the map.
  
 **Acceptance Scenarios**:
  
 1. **Given** the home page is loaded, **When** I select a new location and submit,
-  **Then** both charts update to show risk for the selected location.
+  **Then** the map updates to show risk for the selected location.
 2. **Given** the home page is loaded, **When** I select a custom date range and
-  submit, **Then** both charts update to reflect the chosen date range.
+  submit, **Then** the map updates to reflect the chosen date range.
 3. **Given** the home page is loaded, **When** I enter a ZIP code and submit,
   **Then** the system analyzes and displays results for an area within a 100-mile
   radius of that ZIP code.
 4. **Given** results are displayed for a location/date range, **When** I switch
-  the visible overlay layer on either chart, **Then** I can view mosquito risk,
+  the visible overlay layer on the map, **Then** I can view mosquito risk,
   land-surface temperature, land coverage, and precipitation for the same
   location/date range.
 
@@ -130,14 +130,14 @@ and verifying three tiles render with the expected two-year window.
 
 ### Functional Requirements
  
-- **FR-001**: System MUST provide a home page that displays two mosquito risk map
-  visualizations for the default location “Florida”.
-- **FR-002**: System MUST default the two home page visualizations to the last
-  30 days and last 12 months.
+- **FR-001**: System MUST provide a home page that displays a single mosquito risk map
+  visualization with default query parameters.
+- **FR-002**: System MUST default the home page visualization to ZIP code 33172 and
+  date range 2023-01-01 to 2024-12-31.
 - **FR-003**: The home page MUST provide form controls to select a location and a
   date range.
 - **FR-004**: When the user submits the home page form, the system MUST refresh the
-  displayed risk visualizations to match the selected location and date range.
+  displayed risk visualization to match the selected location and date range.
 - **FR-005**: The system MUST provide navigation from the home page to an
   environmental drivers page.
 - **FR-006**: The environmental drivers page MUST accept a location input.
@@ -163,18 +163,25 @@ and verifying three tiles render with the expected two-year window.
   logs).
 - **FR-012**: The system MUST accept user-entered location text (city name and/or
   ZIP code) and resolve it to a geographic area for analysis.
-  The system MUST still default the home page to the statewide Florida view when no
-  user input is provided.
+  The system MUST default the home page to ZIP code 33172 when no user input is
+  provided.
 - **FR-013**: When the user enters a ZIP code (or a location that resolves to a
   point), the system MUST analyze an area within a 100-mile radius of that point.
   For locations that resolve to polygons (e.g., administrative boundaries), the
   system SHOULD analyze the polygon geometry directly.
-- **FR-014**: The home page MUST allow the user to view, on each of the two map
-  panels, mosquito risk alongside environmental layers for the same
-  location/date range:
+- **FR-014**: The home page MUST allow the user to view, on the single map panel,
+  mosquito risk alongside environmental layers for the same location/date range:
   - Land-surface temperature
   - Land coverage
   - Precipitation
+- **FR-015**: The system MUST provide an error console component on both the Home
+  page and Environmental Drivers page that displays:
+  - Interpreted error messages with user-friendly guidance (e.g., "Earth Engine
+    is not initialized. Authenticate locally (earthengine authenticate) and
+    retry." for 503 errors)
+  - The last 5 lines of the error stack trace when available
+  - Clear visual distinction (red border, monospace font) to make errors
+    immediately visible at the top of the page
 
 ### Key Entities *(include if feature involves data)*
  
@@ -207,9 +214,10 @@ and verifying three tiles render with the expected two-year window.
 
 ### Measurable Outcomes
  
-- **SC-001**: A user can load the home page and see two rendered risk map charts for
-  Florida within 10 seconds on a typical developer laptop.
-- **SC-002**: A user can submit a location/date range selection and see both charts
+- **SC-001**: A user can load the home page and see a single rendered risk map chart for
+  ZIP code 33172 with date range 2023-01-01 to 2024-12-31 within 10 seconds on a typical
+  developer laptop.
+- **SC-002**: A user can submit a location/date range selection and see the single map
   refresh successfully (or show a clear error state) in under 15 seconds.
 - **SC-003**: A user can navigate to the environmental drivers page and see three
   tiles rendered for a provided location within 15 seconds.

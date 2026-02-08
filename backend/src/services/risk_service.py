@@ -40,19 +40,57 @@ class RiskService:
     def _layers(self, *, region, start: date, end: date, sources) -> list[dict]:
         import ee  # type: ignore
 
+        s2_id = sources.eeimagesets.get("vegetation")
+        lst_id = sources.eeimagesets.get("land_surface_temperature")
+        chirps_id = sources.eeimagesets.get("precipitation")
+        
+        if not (s2_id and lst_id and chirps_id):
+            raise DataUnavailableError("Earth Engine image sets are not configured")
+
+        def _mask_s2_clouds(img):
+            qa = img.select("QA60")
+            cloud_bit_mask = 1 << 10
+            cirrus_bit_mask = 1 << 11
+            mask = qa.bitwiseAnd(cloud_bit_mask).eq(0).And(qa.bitwiseAnd(cirrus_bit_mask).eq(0))
+            return img.updateMask(mask)
+
+        s2 = (
+            ee.ImageCollection(s2_id)
+            .filterDate(str(start), str(end))
+            .filterBounds(region)
+            .map(_mask_s2_clouds)
+        )
+        s2_img = s2.median()
+        ndvi = s2_img.normalizedDifference(["B8", "B4"]).rename("ndvi").clip(region)
+
+        lst = (
+            ee.ImageCollection(lst_id)
+            .filterDate(str(start), str(end))
+            .filterBounds(region)
+            .select(["LST_Day_1km"])
+        )
+        lst_img = lst.mean().multiply(0.02).subtract(273.15).rename("lst_c").clip(region)
+
+        chirps = (
+            ee.ImageCollection(chirps_id)
+            .filterDate(str(start), str(end))
+            .filterBounds(region)
+        )
+        precip_img = chirps.sum().rename("precip_mm").clip(region)
+
         risk_image = build_default_risk_image(region=region, start_date=start, end_date=end, sources=sources)
 
-        lst_image = ee.Image.constant(1).toInt().clip(region)
-        land_cover_image = ee.Image.constant(1).toInt().clip(region)
-        precip_image = ee.Image.constant(1).toInt().clip(region)
-
         risk_vis = {"min": 0, "max": 2, "palette": ["#2E7D32", "#F9A825", "#C62828"]}
-        env_vis = {"min": 0, "max": 1, "palette": ["#1E88E5", "#90CAF9"]}
+        lst_vis = {"min": 10, "max": 40, "palette": ["#2c7bb6", "#ffffbf", "#d7191c"]}
+        ndvi_vis = {"min": 0.0, "max": 1.0, "palette": ["#f7fcf5", "#74c476", "#00441b"]}
+        window_days = (end - start).days + 1
+        precip_max = min(3000, max(100, window_days * 20))
+        precip_vis = {"min": 0, "max": precip_max, "palette": ["#f7fbff", "#6baed6", "#08306b"]}
 
         risk_tile = ee_image_tile_url_template(risk_image, risk_vis)
-        lst_tile = ee_image_tile_url_template(lst_image, env_vis)
-        land_cover_tile = ee_image_tile_url_template(land_cover_image, env_vis)
-        precip_tile = ee_image_tile_url_template(precip_image, env_vis)
+        lst_tile = ee_image_tile_url_template(lst_img, lst_vis)
+        ndvi_tile = ee_image_tile_url_template(ndvi, ndvi_vis)
+        precip_tile = ee_image_tile_url_template(precip_img, precip_vis)
 
         return [
             {
@@ -65,19 +103,19 @@ class RiskService:
                 "layer_id": "land_surface_temperature",
                 "label": "Land Surface Temperature",
                 "tile_url_template": lst_tile.url,
-                "attribution": "Google Earth Engine",
+                "attribution": "MODIS LST (MOD11A1) via Google Earth Engine",
             },
             {
                 "layer_id": "land_cover",
-                "label": "Land Cover",
-                "tile_url_template": land_cover_tile.url,
-                "attribution": "Google Earth Engine",
+                "label": "Vegetation (NDVI)",
+                "tile_url_template": ndvi_tile.url,
+                "attribution": "Sentinel-2 SR Harmonized (Copernicus) via Google Earth Engine",
             },
             {
                 "layer_id": "precipitation",
                 "label": "Precipitation",
                 "tile_url_template": precip_tile.url,
-                "attribution": "Google Earth Engine",
+                "attribution": "CHIRPS Daily Precipitation via Google Earth Engine",
             },
         ]
 
