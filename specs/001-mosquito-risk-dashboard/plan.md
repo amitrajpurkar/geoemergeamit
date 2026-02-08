@@ -20,6 +20,11 @@
  layers (land-surface temperature, land coverage, precipitation) for the same
  location/date range.
  
+ The application displays legends for all four map layers simultaneously (Risk,
+ Land Surface Temperature, Vegetation/NDVI, Precipitation) on both the Home page
+ and Environmental Drivers page, showing color scales and value ranges to enable
+ proper interpretation regardless of which layer is currently active.
+ 
  A second page shows environmental driver tiles (2-year window): vegetation cover,
  temperature, and precipitation/standing water.
  

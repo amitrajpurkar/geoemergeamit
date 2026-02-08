@@ -105,3 +105,9 @@
 
 ## speckit.specify
 * update user story 1 from spec.md to set the default values for the query parameters; set the default city zip code as 33172 and the default date range as 2023-01-01 to 2024-12-31; show only one map on the home page which is for this default date range and default zip code; on the query page as well show only one map for the query parameters given by a user; also update plan.md and tasks.md accordingly; add new tasks to tasks.md to implement this feature 
+* implement each of the new tasks from Phase 6d
+* Can you first run both backend and frontend servers and verify if the behaviour on both home page and query page are now as expected
+* update specifications further with more details; on both home and query pages, change the legends to show the color and meaning for each layers not just risk. so it should have four legends, one for each layer.
+* implement each of the new tasks from phase 6e
+* on verifying manually, i am not able to see any legends on the home page; above the map, it only shows the label as "Layer Legends"; it does not show what different colors mean for each layer; can you verify and fix this issue;
+* the legends are showing up now; do stop both backend and frontend server so that i can commit the changes so far.

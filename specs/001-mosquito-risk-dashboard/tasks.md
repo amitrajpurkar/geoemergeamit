@@ -196,12 +196,21 @@ temperature, land coverage, and precipitation layers for the same location/date 
 
 ### Phase 6d: Single Map View with Default Parameters (Simplification)
 
-- [ ] T090 [P1] Update backend default query parameters in backend/src/api/routers/risk.py: change default location from "Florida" to ZIP code "33172" and default date range from last_30_days/last_12_months to fixed range 2023-01-01 to 2024-12-31
-- [ ] T091 [P1] Update Home page to single map view in frontend/src/pages/Home.tsx: remove second map component, update layout to display single RiskMap component, update default form values to ZIP 33172 and date range 2023-01-01 to 2024-12-31
-- [ ] T092 [P1] Update Drivers page to single map view in frontend/src/pages/Drivers.tsx: ensure single map display for user-specified location and date range, update form handling to match new single map pattern
-- [ ] T093 [P2] Update API response schemas in backend/src/domain/schemas.py: ensure DriversResponse and related schemas support single map view (remove any dual-window artifacts if present)
-- [ ] T094 [P2] Add integration tests for default parameters in backend/tests/integration/test_api_risk_default.py: verify API returns correct response for default ZIP 33172 and date range 2023-01-01 to 2024-12-31
-- [ ] T095 [P2] Update frontend E2E tests (if present) to verify single map view on Home page loads with correct defaults (ZIP 33172, date range 2023-01-01 to 2024-12-31)
+- [X] T090 [P1] Update backend default query parameters in backend/src/api/routes/risk.py: change default location from "Florida" to ZIP code "33172" and default date range from last_30_days/last_12_months to fixed range 2023-01-01 to 2024-12-31
+- [X] T091 [P1] Update Home page to single map view in frontend/src/pages/Home.tsx: remove second map component, update layout to display single RiskMap component, update default form values to ZIP 33172 and date range 2023-01-01 to 2024-12-31
+- [X] T092 [P1] Update Drivers page to single map view in frontend/src/pages/Drivers.tsx: ensure single map display for user-specified location and date range, update form handling to match new single map pattern
+- [X] T093 [P2] Update API response schemas in backend/src/api/schemas.py: ensure DriversResponse and related schemas support single map view (verified no dual-window artifacts present)
+- [X] T094 [P2] Add integration tests for default parameters in backend/tests/integration/test_api_risk_default.py: verify API returns correct response for default ZIP 33172 and date range 2023-01-01 to 2024-12-31
+- [X] T095 [P2] Update frontend E2E tests (if present) to verify single map view on Home page loads with correct defaults (ZIP 33172, date range 2023-01-01 to 2024-12-31) - No E2E tests found
+
+### Phase 6e: Multi-Layer Legends (Enhanced Visualization Interpretation)
+
+- [X] T096 [P1] Extend backend layer metadata in backend/src/services/risk_service.py: add legend/color scale information to each layer in the `_layers()` method response, including min/max values, palette colors, and units for LST (°C), NDVI (0.0-1.0), and precipitation (mm)
+- [X] T097 [P1] Create MultiLayerLegend component in frontend/src/components/MultiLayerLegend.tsx: implement component that displays all four layer legends simultaneously (Risk categorical bands, LST continuous scale with temperature range, NDVI continuous scale 0.0-1.0, Precipitation continuous scale with units), with clear color gradients and value labels for each layer
+- [X] T098 [P1] Update Home page in frontend/src/pages/Home.tsx: replace single RiskLegend component with MultiLayerLegend component, pass all layer metadata from API response to display comprehensive legends for all available layers
+- [X] T099 [P1] Update Drivers page in frontend/src/pages/Drivers.tsx: add MultiLayerLegend component below error console to display layer color scales consistently with Home page, also add legend metadata to driver tiles in backend/src/services/drivers_service.py
+- [X] T100 [P2] Update API response schemas in backend/src/api/schemas.py: add LegendCategorySchema and LayerLegendSchema, add optional legend field to OverlayLayerSchema and DriverTileSchema to support per-layer legend metadata (min, max, palette, units, categories)
+- [X] T101 [P2] Add integration tests in backend/tests/integration/test_layer_legends.py: verify that all four layers return appropriate legend metadata with correct min/max values, palette arrays, and units in API responses for both risk and driver endpoints
 
 ---
 

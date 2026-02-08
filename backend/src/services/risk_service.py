@@ -98,35 +98,64 @@ class RiskService:
                 "label": "Mosquito Risk",
                 "tile_url_template": risk_tile.url,
                 "attribution": "Google Earth Engine",
+                "legend": {
+                    "type": "categorical",
+                    "min": risk_vis["min"],
+                    "max": risk_vis["max"],
+                    "palette": risk_vis["palette"],
+                    "categories": [
+                        {"value": 0, "label": "Low", "color": "#2E7D32"},
+                        {"value": 1, "label": "Medium", "color": "#F9A825"},
+                        {"value": 2, "label": "High", "color": "#C62828"}
+                    ]
+                }
             },
             {
                 "layer_id": "land_surface_temperature",
                 "label": "Land Surface Temperature",
                 "tile_url_template": lst_tile.url,
                 "attribution": "MODIS LST (MOD11A1) via Google Earth Engine",
+                "legend": {
+                    "type": "continuous",
+                    "min": lst_vis["min"],
+                    "max": lst_vis["max"],
+                    "palette": lst_vis["palette"],
+                    "unit": "°C"
+                }
             },
             {
                 "layer_id": "land_cover",
                 "label": "Vegetation (NDVI)",
                 "tile_url_template": ndvi_tile.url,
                 "attribution": "Sentinel-2 SR Harmonized (Copernicus) via Google Earth Engine",
+                "legend": {
+                    "type": "continuous",
+                    "min": ndvi_vis["min"],
+                    "max": ndvi_vis["max"],
+                    "palette": ndvi_vis["palette"],
+                    "unit": "NDVI"
+                }
             },
             {
                 "layer_id": "precipitation",
                 "label": "Precipitation",
                 "tile_url_template": precip_tile.url,
                 "attribution": "CHIRPS Daily Precipitation via Google Earth Engine",
+                "legend": {
+                    "type": "continuous",
+                    "min": precip_vis["min"],
+                    "max": precip_vis["max"],
+                    "palette": precip_vis["palette"],
+                    "unit": "mm"
+                }
             },
         ]
 
-    def get_default(self, *, window: str) -> dict:
-        today = date.today()
-        if window == "last_30_days":
-            start = today - timedelta(days=30)
-        elif window == "last_12_months":
-            start = today - timedelta(days=365)
-        else:
-            raise InvalidDateRangeError("Unsupported window")
+    def get_default(self) -> dict:
+        # Fixed default parameters per spec: ZIP 33172, date range 2023-01-01 to 2024-12-31
+        default_location = "33172"
+        start = date(2023, 1, 1)
+        end = date(2024, 12, 31)
 
         sources = load_sources_config(default_sources_yaml_path(self._repo_root))
         sources = merge_local_auth_token(sources, repo_root=self._repo_root)
@@ -135,19 +164,30 @@ class RiskService:
         client = EarthEngineClient(project=ee_project)
         client.initialize()
 
-        region = florida_ee_geometry(repo_root=self._repo_root, sources=sources)
-        layers = self._layers(region=region, start=start, end=today, sources=sources)
+        geocoder = default_geocoder()
+        result = geocoder.geocode(default_location)
+        location = location_from_geocoding(str(uuid4()), default_location, result)
+
+        import ee  # type: ignore
+
+        region, viewport = region_and_viewport_from_location(
+            location_geometry=location.geometry,
+            location_bbox=location.bbox,
+        )
+
+        layers = self._layers(region=region, start=start, end=end, sources=sources)
         tile_url = layers[0]["tile_url_template"]
         if not tile_url:
             raise DataUnavailableError("No tile URL returned")
 
         return {
-            "location_label": "Florida",
-            "date_range": {"start_date": start, "end_date": today},
+            "location_label": location.label,
+            "date_range": {"start_date": start, "end_date": end},
             "tile_url_template": tile_url,
             "attribution": layers[0].get("attribution"),
             "legend": self._legend(),
             "layers": layers,
+            "viewport": viewport,
         }
 
     def query(self, *, location_text: str, start_date: date, end_date: date) -> dict:

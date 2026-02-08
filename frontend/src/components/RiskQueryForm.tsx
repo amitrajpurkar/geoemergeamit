@@ -14,9 +14,9 @@ export function RiskQueryForm({
   onSubmit: (q: RiskQuery) => void
   disabled?: boolean
 }) {
-  const [locationText, setLocationText] = useState('Miami, FL')
-  const [startDate, setStartDate] = useState('')
-  const [endDate, setEndDate] = useState('')
+  const [locationText, setLocationText] = useState('33172')
+  const [startDate, setStartDate] = useState('2023-01-01')
+  const [endDate, setEndDate] = useState('2024-12-31')
 
   function submit(e: FormEvent) {
     e.preventDefault()

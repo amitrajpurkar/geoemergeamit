@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { DriverTile } from '../components/DriverTile'
 import { ErrorConsole } from '../components/ErrorConsole'
+import { MultiLayerLegend } from '../components/MultiLayerLegend'
 import { fetchDrivers, type DriversResponse } from '../services/api'
 
 export function Drivers({
@@ -11,9 +12,9 @@ export function Drivers({
   onBack: () => void
   initialQuery: { location_text: string; start_date: string; end_date: string } | null
 }) {
-  const [locationText, setLocationText] = useState(initialQuery?.location_text ?? 'Miami, FL')
-  const [startDate, setStartDate] = useState(initialQuery?.start_date ?? '')
-  const [endDate, setEndDate] = useState(initialQuery?.end_date ?? '')
+  const [locationText, setLocationText] = useState(initialQuery?.location_text ?? '33172')
+  const [startDate, setStartDate] = useState(initialQuery?.start_date ?? '2023-01-01')
+  const [endDate, setEndDate] = useState(initialQuery?.end_date ?? '2024-12-31')
   const [data, setData] = useState<DriversResponse | null>(null)
   const [error, setError] = useState<Error | string | null>(null)
   const [loading, setLoading] = useState(false)
@@ -92,6 +93,8 @@ export function Drivers({
       </div>
 
       <ErrorConsole error={error} />
+
+      {data?.tiles ? <MultiLayerLegend layers={data.tiles} /> : null}
 
       <div className="grid" style={{ marginTop: 12 }}>
         {data?.tiles?.map((t) => (

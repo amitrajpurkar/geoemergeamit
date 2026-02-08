@@ -120,6 +120,13 @@ class DriversService:
                 "metrics": {"index": "NDVI"},
                 "tile_url_template": ndvi_tile.url,
                 "attribution": "Sentinel-2 SR Harmonized (Copernicus) via Google Earth Engine",
+                "legend": {
+                    "type": "continuous",
+                    "min": ndvi_vis["min"],
+                    "max": ndvi_vis["max"],
+                    "palette": ndvi_vis["palette"],
+                    "unit": "NDVI"
+                }
             },
             {
                 "driver_type": "temperature",
@@ -128,6 +135,13 @@ class DriversService:
                 "metrics": {"units": "C"},
                 "tile_url_template": lst_tile.url,
                 "attribution": "MODIS LST (MOD11A1) via Google Earth Engine",
+                "legend": {
+                    "type": "continuous",
+                    "min": lst_vis["min"],
+                    "max": lst_vis["max"],
+                    "palette": lst_vis["palette"],
+                    "unit": "°C"
+                }
             },
             {
                 "driver_type": "precipitation",
@@ -136,6 +150,13 @@ class DriversService:
                 "metrics": {"precip_units": "mm", "index": "NDWI"},
                 "tile_url_template": precip_tile.url,
                 "attribution": "CHIRPS Daily Precipitation via Google Earth Engine",
+                "legend": {
+                    "type": "continuous",
+                    "min": precip_vis["min"],
+                    "max": precip_vis["max"],
+                    "palette": precip_vis["palette"],
+                    "unit": "mm"
+                }
             },
             {
                 "driver_type": "standing_water",
@@ -144,6 +165,13 @@ class DriversService:
                 "metrics": {"index": "NDWI"},
                 "tile_url_template": ndwi_tile.url,
                 "attribution": "Sentinel-2 SR Harmonized (Copernicus) via Google Earth Engine",
+                "legend": {
+                    "type": "continuous",
+                    "min": ndwi_vis["min"],
+                    "max": ndwi_vis["max"],
+                    "palette": ndwi_vis["palette"],
+                    "unit": "NDWI"
+                }
             },
         ]
 

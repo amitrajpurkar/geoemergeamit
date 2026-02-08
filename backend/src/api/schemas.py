@@ -32,11 +32,27 @@ class RiskBandSchema(BaseModel):
     color: str
 
 
+class LegendCategorySchema(BaseModel):
+    value: int
+    label: str
+    color: str
+
+
+class LayerLegendSchema(BaseModel):
+    type: str
+    min: float
+    max: float
+    palette: list[str]
+    unit: str | None = None
+    categories: list[LegendCategorySchema] | None = None
+
+
 class OverlayLayerSchema(BaseModel):
     layer_id: str
     label: str
     tile_url_template: str
     attribution: str | None = None
+    legend: LayerLegendSchema | None = None
 
 
 class ViewportSchema(BaseModel):
@@ -81,6 +97,7 @@ class DriverTileSchema(BaseModel):
     metrics: dict[str, Any] | None = None
     tile_url_template: str | None = None
     attribution: str | None = None
+    legend: LayerLegendSchema | None = None
 
 
 class DriversResponseSchema(BaseModel):

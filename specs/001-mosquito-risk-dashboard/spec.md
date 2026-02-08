@@ -154,6 +154,14 @@ and verifying three tiles render with the expected two-year window.
   data is unavailable for a requested location/time window.
 - **FR-010**: The system MUST represent mosquito risk as categorical bands
   (Low/Med/High) and explain how to interpret those bands.
+- **FR-010a**: The system MUST display legends for all four map layers on both the
+  Home page and Environmental Drivers (Query) page:
+  - Mosquito Risk: categorical bands (Low/Medium/High) with color codes
+  - Land Surface Temperature: continuous color scale with temperature range and units
+  - Vegetation (NDVI): continuous color scale with NDVI range (0.0 to 1.0)
+  - Precipitation: continuous color scale with precipitation range and units
+  Each legend MUST clearly show the color gradient/categories and their corresponding
+  values or meanings to enable proper interpretation of the map overlays.
 - **FR-011**: The system MUST use a combination of:
   - Static datasets referenced in `resources/sources.yaml` (Geo-Emerge GitHub URLs),
     and
@@ -172,8 +180,11 @@ and verifying three tiles render with the expected two-year window.
 - **FR-014**: The home page MUST allow the user to view, on the single map panel,
   mosquito risk alongside environmental layers for the same location/date range:
   - Land-surface temperature
-  - Land coverage
+  - Land coverage (Vegetation/NDVI)
   - Precipitation
+  The system MUST display appropriate legends for all available layers simultaneously,
+  allowing users to understand the color scales regardless of which layer is currently
+  active on the map.
 - **FR-015**: The system MUST provide an error console component on both the Home
   page and Environmental Drivers page that displays:
   - Interpreted error messages with user-friendly guidance (e.g., "Earth Engine

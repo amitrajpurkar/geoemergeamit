@@ -60,9 +60,8 @@ export type DriversResponse = {
 
 const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://127.0.0.1:8000'
 
-export async function fetchDefaultRisk(window: 'last_30_days' | 'last_12_months'): Promise<RiskLayerResponse> {
+export async function fetchDefaultRisk(): Promise<RiskLayerResponse> {
   const url = new URL('/api/risk/default', API_BASE)
-  url.searchParams.set('window', window)
 
   const resp = await fetch(url.toString())
   if (!resp.ok) {
