@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 
 import { ErrorConsole } from '../components/ErrorConsole'
-import { MultiLayerLegend } from '../components/MultiLayerLegend'
-import { RiskMap } from '../components/RiskMap'
+import { FourTileGrid } from '../components/FourTileGrid'
 import { RiskQueryForm, type RiskQuery } from '../components/RiskQueryForm'
-import { fetchDefaultRisk, fetchRiskQuery, type OverlayLayer, type RiskLayerResponse } from '../services/api'
+import { fetchDefaultRisk, fetchRiskQuery, type RiskLayerResponse } from '../services/api'
 
 export function Home({
   onOpenDrivers,
@@ -16,7 +15,6 @@ export function Home({
   const [riskData, setRiskData] = useState<RiskLayerResponse | null>(null)
   const [error, setError] = useState<Error | string | null>(null)
   const [loading, setLoading] = useState(false)
-  const [layerId, setLayerId] = useState('risk')
   const [mode, setMode] = useState<'default' | 'query'>('default')
 
   useEffect(() => {
@@ -63,7 +61,6 @@ export function Home({
         date_range: { start_date: q.start_date, end_date: q.end_date }
       })
       setRiskData(layer)
-      setLayerId('risk')
       setMode('query')
       onQuerySuccess({ location_text: q.location_text, start_date: q.start_date, end_date: q.end_date })
     } catch (e) {
@@ -73,15 +70,8 @@ export function Home({
     }
   }
 
-  function pickLayer(resp: RiskLayerResponse | null, layerId: string): OverlayLayer | null {
-    const layers = resp?.layers ?? []
-    return layers.find((l) => l.layer_id === layerId) ?? (layers.length ? layers[0] : null)
-  }
-
-  const overlay = pickLayer(riskData, layerId)
-
-  const mapTitle = riskData
-    ? `${riskData.location_label}  -  ${riskData.date_range.start_date} to ${riskData.date_range.end_date}`
+  const heading = riskData
+    ? `${riskData.location_label}  —  ${riskData.date_range.start_date} to ${riskData.date_range.end_date}`
     : 'Loading...'
 
   return (
@@ -99,27 +89,9 @@ export function Home({
 
       <ErrorConsole error={error} />
 
-      {riskData?.layers ? <MultiLayerLegend layers={riskData.layers} /> : null}
+      <h2 style={{ margin: '12px 0 8px 0', fontSize: 16, fontWeight: 600 }}>{heading}</h2>
 
-      <div className="panel" style={{ marginTop: 12 }}>
-        <div className="panel-header">
-          <h2 className="panel-title">{mapTitle}</h2>
-          {riskData?.layers?.length ? (
-            <select value={layerId} onChange={(e) => setLayerId(e.target.value)} disabled={loading}>
-              {riskData.layers.map((l) => (
-                <option key={l.layer_id} value={l.layer_id}>
-                  {l.label}
-                </option>
-              ))}
-            </select>
-          ) : null}
-        </div>
-        {riskData && overlay ? (
-          <RiskMap layer={riskData} overlayUrl={overlay.tile_url_template} overlayAttribution={overlay.attribution} />
-        ) : (
-          <div style={{ padding: 12 }}>Loading…</div>
-        )}
-      </div>
+      <FourTileGrid layers={riskData?.layers ?? []} viewport={riskData?.viewport} loading={loading} />
     </div>
   )
 }
