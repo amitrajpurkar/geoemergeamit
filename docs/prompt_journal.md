@@ -117,3 +117,12 @@
 * implement -- execute each of the new tasks from phase 6f
 * the application is now working as expected; thanks for all iterations
 * analyze the entire code base of this application now; document the architecture and design of this application as a new markdown file under ./docs/architecture.md
+
+
+## speckit.specify -- 2026-02-10
+* analyze this application first; the architecture for this application is under ./docs/architecture.md; the specifications given so far are under spec.md file;
+* create a new specifications file for adding a new feature to this application; on both the home page and query page, instead of the single tile showing a map with dropdowns for selecting four different layers; change this layout to show four tiles, one for each layer; also remove the dropdowns and show what each tile is showing; one for mosquito risk, one for land-surface-temperature, one for land-coverage and one for precipitation; keep the legends as they are now; also create a new git branch for this new feature; the application should continue to work like the current state, showing on the map the zip code supplied, default or user supplied; 
+* run speckit.clarify to get more details about this feature
+* speckit.plan -- create an implementation plan for this feature list
+* speckit.tasks -- generate actionable implementation tasks, categorize into phases
+* speckit.implement -- implement tasks from Phase 1
