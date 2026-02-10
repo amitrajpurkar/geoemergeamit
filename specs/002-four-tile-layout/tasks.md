@@ -19,8 +19,8 @@
 
 **Purpose**: TypeScript type alignment and CSS foundation needed before any component work
 
-- [ ] T001 Add `LayerLegend` and `LegendCategory` types and add `legend?: LayerLegend` to `OverlayLayer` type in frontend/src/services/api.ts
-- [ ] T002 [P] Add `.four-tile-grid` responsive CSS Grid styles (2-column default, 1-column below 768 px) in frontend/src/styles.css
+- [x] T001 Add `LayerLegend` and `LegendCategory` types and add `legend?: LayerLegend` to `OverlayLayer` type in frontend/src/services/api.ts
+- [x] T002 [P] Add `.four-tile-grid` responsive CSS Grid styles (2-column default, 1-column below 768 px) in frontend/src/styles.css
 
 ---
 
@@ -30,9 +30,9 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T003 Create `LayerLegend` component that renders a single legend (categorical with colour boxes or continuous with gradient bar) in frontend/src/components/LayerLegend.tsx
-- [ ] T004 Create `LayerTile` component that renders a Leaflet map with heading, Earth Engine tile overlay, optional analysis-radius circle, and inline `LayerLegend`; accepts `center`/`zoom`/`onViewportChange` props for viewport sync in frontend/src/components/LayerTile.tsx
-- [ ] T005 Create `FourTileGrid` component that manages shared viewport state (`center`, `zoom`), renders one `LayerTile` per entry in a `layers` array using CSS Grid, synchronizes pan/zoom across all tiles via lifted state, and shows loading placeholders in frontend/src/components/FourTileGrid.tsx
+- [x] T003 Create `LayerLegend` component that renders a single legend (categorical with colour boxes or continuous with gradient bar) in frontend/src/components/LayerLegend.tsx
+- [x] T004 Create `LayerTile` component that renders a Leaflet map with heading, Earth Engine tile overlay, optional analysis-radius circle, and inline `LayerLegend`; accepts `center`/`zoom`/`onViewportChange` props for viewport sync in frontend/src/components/LayerTile.tsx
+- [x] T005 Create `FourTileGrid` component that manages shared viewport state (`center`, `zoom`), renders one `LayerTile` per entry in a `layers` array using CSS Grid, synchronizes pan/zoom across all tiles via lifted state, and shows loading placeholders in frontend/src/components/FourTileGrid.tsx
 
 **Checkpoint**: Foundation ready — new components exist and can be imported. User story implementation can now begin.
 
@@ -46,9 +46,9 @@
 
 ### Implementation for User Story 1
 
-- [ ] T006 [US1] Refactor `Home.tsx` to replace the single `<RiskMap>` + layer `<select>` dropdown + `<MultiLayerLegend>` with a single `<FourTileGrid>` that receives `riskData.layers` and `riskData.viewport` in frontend/src/pages/Home.tsx
-- [ ] T007 [US1] Remove the `layerId` state variable and the `pickLayer` helper function that are no longer needed after dropdown removal in frontend/src/pages/Home.tsx
-- [ ] T008 [US1] Verify default view renders four tiles by starting backend (`uv run python -m backend`) and frontend (`npm run dev`) and loading http://127.0.0.1:5173 — confirm 2×2 grid, labelled tiles, no dropdown, correct overlays for ZIP 33172
+- [x] T006 [US1] Refactor `Home.tsx` to replace the single `<RiskMap>` + layer `<select>` dropdown + `<MultiLayerLegend>` with a single `<FourTileGrid>` that receives `riskData.layers` and `riskData.viewport` in frontend/src/pages/Home.tsx
+- [x] T007 [US1] Remove the `layerId` state variable and the `pickLayer` helper function that are no longer needed after dropdown removal in frontend/src/pages/Home.tsx
+- [x] T008 [US1] Verify default view renders four tiles by starting backend (`uv run python -m backend`) and frontend (`npm run dev`) and loading http://127.0.0.1:5173 — confirm 2×2 grid, labelled tiles, no dropdown, correct overlays for ZIP 33172
 
 **Checkpoint**: User Story 1 is complete — Home page shows four default tiles. This is the MVP.
 
@@ -62,10 +62,10 @@
 
 ### Implementation for User Story 2
 
-- [ ] T009 [US2] Verify `onQuery` handler in `Home.tsx` correctly passes updated `riskData` (including new `layers` and `viewport`) to `FourTileGrid` after a successful query response in frontend/src/pages/Home.tsx
-- [ ] T010 [US2] Ensure `FourTileGrid` resets its internal viewport state (`center`, `zoom`) when the `viewport` prop changes (new query result) so tiles re-center on the new location in frontend/src/components/FourTileGrid.tsx
-- [ ] T011 [US2] Ensure all four tiles show a loading indicator simultaneously while a query is in progress (pass `loading` prop to `FourTileGrid`) in frontend/src/pages/Home.tsx and frontend/src/components/FourTileGrid.tsx
-- [ ] T012 [US2] Manually test: enter ZIP 90210 with date range 2023-06-01 to 2024-06-01, submit, confirm all four tiles update and heading reflects query
+- [x] T009 [US2] Verify `onQuery` handler in `Home.tsx` correctly passes updated `riskData` (including new `layers` and `viewport`) to `FourTileGrid` after a successful query response in frontend/src/pages/Home.tsx
+- [x] T010 [US2] Ensure `FourTileGrid` resets its internal viewport state (`center`, `zoom`) when the `viewport` prop changes (new query result) so tiles re-center on the new location in frontend/src/components/FourTileGrid.tsx
+- [x] T011 [US2] Ensure all four tiles show a loading indicator simultaneously while a query is in progress (pass `loading` prop to `FourTileGrid`) in frontend/src/pages/Home.tsx and frontend/src/components/FourTileGrid.tsx
+- [x] T012 [US2] Manually test: enter ZIP 90210 with date range 2023-06-01 to 2024-06-01, submit, confirm all four tiles update and heading reflects query
 
 **Checkpoint**: User Stories 1 AND 2 are complete — default and custom queries both render four tiles.
 
@@ -79,9 +79,9 @@
 
 ### Implementation for User Story 3
 
-- [ ] T013 [US3] Confirm `MultiLayerLegend` import and usage is removed from `Home.tsx` (should already be done in T006; verify no residual rendering) in frontend/src/pages/Home.tsx
-- [ ] T014 [US3] Verify `LayerLegend` renders correctly for all four legend types by inspecting each tile in the browser: Risk (categorical with 3 colour boxes), LST (continuous °C), NDVI (continuous 0–1), Precipitation (continuous mm)
-- [ ] T015 [US3] Confirm `MultiLayerLegend` is still used on the Drivers page (`Drivers.tsx`) and is NOT affected by this feature in frontend/src/pages/Drivers.tsx
+- [x] T013 [US3] Confirm `MultiLayerLegend` import and usage is removed from `Home.tsx` (should already be done in T006; verify no residual rendering) in frontend/src/pages/Home.tsx
+- [x] T014 [US3] Verify `LayerLegend` renders correctly for all four legend types by inspecting each tile in the browser: Risk (categorical with 3 colour boxes), LST (continuous °C), NDVI (continuous 0–1), Precipitation (continuous mm)
+- [x] T015 [US3] Confirm `MultiLayerLegend` is still used on the Drivers page (`Drivers.tsx`) and is NOT affected by this feature in frontend/src/pages/Drivers.tsx
 
 **Checkpoint**: All three user stories are complete — four tiles with per-tile legends, synced viewports, working for default and custom queries.
 
@@ -91,12 +91,12 @@
 
 **Purpose**: Edge cases, responsiveness, and cleanup
 
-- [ ] T016 [P] Verify responsive layout: narrow browser to < 768 px and confirm tiles reflow to single column, each tile remains scrollable and legible
-- [ ] T017 [P] Verify per-tile error handling: if one tile overlay fails to load (e.g., simulate by temporarily breaking one tile URL), confirm the other three tiles still render
-- [ ] T018 [P] Verify Drivers page is completely unchanged: navigate to Environmental Drivers and confirm existing multi-tile layout and legends work as before
-- [ ] T019 Verify viewport sync loop guard: rapidly pan/zoom a tile and confirm no infinite re-render or jank (check browser console for errors)
-- [ ] T020 Run full quickstart.md validation (all 5 verification steps) as a final acceptance check
-- [ ] T021 [P] Remove any dead code: if `RiskMap.tsx` is no longer imported anywhere, consider keeping it (used by other features) or marking as legacy in a comment
+- [x] T016 [P] Verify responsive layout: narrow browser to < 768 px and confirm tiles reflow to single column, each tile remains scrollable and legible
+- [x] T017 [P] Verify per-tile error handling: if one tile overlay fails to load (e.g., simulate by temporarily breaking one tile URL), confirm the other three tiles still render
+- [x] T018 [P] Verify Drivers page is completely unchanged: navigate to Environmental Drivers and confirm existing multi-tile layout and legends work as before
+- [x] T019 Verify viewport sync loop guard: rapidly pan/zoom a tile and confirm no infinite re-render or jank (check browser console for errors)
+- [x] T020 Run full quickstart.md validation (all 5 verification steps) as a final acceptance check
+- [x] T021 [P] Remove any dead code: if `RiskMap.tsx` is no longer imported anywhere, consider keeping it (used by other features) or marking as legacy in a comment
 
 ---
 

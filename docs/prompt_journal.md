@@ -119,10 +119,16 @@
 * analyze the entire code base of this application now; document the architecture and design of this application as a new markdown file under ./docs/architecture.md
 
 
-## speckit.specify -- 2026-02-10
+## speckit.specify -- 2026-02-10 (Claude Opus 4.6 Thinking)
 * analyze this application first; the architecture for this application is under ./docs/architecture.md; the specifications given so far are under spec.md file;
 * create a new specifications file for adding a new feature to this application; on both the home page and query page, instead of the single tile showing a map with dropdowns for selecting four different layers; change this layout to show four tiles, one for each layer; also remove the dropdowns and show what each tile is showing; one for mosquito risk, one for land-surface-temperature, one for land-coverage and one for precipitation; keep the legends as they are now; also create a new git branch for this new feature; the application should continue to work like the current state, showing on the map the zip code supplied, default or user supplied; 
 * run speckit.clarify to get more details about this feature
 * speckit.plan -- create an implementation plan for this feature list
 * speckit.tasks -- generate actionable implementation tasks, categorize into phases
-* speckit.implement -- implement tasks from Phase 1
+* speckit.implement -- implement tasks from Phase 1 --- Rate limit reached here..
+  * Resource exhausted: Global rate limit reached for this model due to high demand. You also reached your personal token limit. Your request was not processed, and no credits were used. Please try again in a few minutes or switch to a different model.: Rate limit error (error ID: d67a3466575c40e99785d9f58bc65207)
+* try above prompt again.. this time with Claude Sonnet 4.5 Thinking model
+* proceed with Phase 2 implementation
+* proceed with Phase 3 implementation
+* choose -- let me verify manually first; now that MVP is implemented.
+* proceed now with Phase 4 tasks

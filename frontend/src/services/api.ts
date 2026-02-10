@@ -9,11 +9,27 @@ export type RiskBand = {
   color: string
 }
 
+export type LegendCategory = {
+  value: number
+  label: string
+  color: string
+}
+
+export type LayerLegend = {
+  type: 'categorical' | 'continuous'
+  min: number
+  max: number
+  palette: string[]
+  unit?: string
+  categories?: LegendCategory[]
+}
+
 export type OverlayLayer = {
   layer_id: string
   label: string
   tile_url_template: string
   attribution?: string
+  legend?: LayerLegend
 }
 
 export type Viewport = {
@@ -49,6 +65,7 @@ export type DriverTile = {
   metrics?: Record<string, unknown>
   tile_url_template?: string | null
   attribution?: string | null
+  legend?: LayerLegend
 }
 
 export type DriversResponse = {
