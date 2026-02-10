@@ -19,8 +19,8 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create validation utility module structure at frontend/src/utils/validation.ts
-- [ ] T002 [P] Add TypeScript types for validation errors and form state in frontend/src/utils/validation.ts
+- [x] T001 Create validation utility module structure at frontend/src/utils/validation.ts
+- [x] T002 [P] Add TypeScript types for validation errors and form state in frontend/src/utils/validation.ts
 
 **Checkpoint**: Validation module structure ready for implementation
 
@@ -32,11 +32,11 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T003 [P] Implement `validateLocation()` function for ZIP/city-state dual format validation in frontend/src/utils/validation.ts
-- [ ] T004 [P] Implement `validateDateRange()` function with 1990-present constraints in frontend/src/utils/validation.ts
-- [ ] T005 [P] Add error message styling for inline validation errors in frontend/src/styles.css
-- [ ] T006 [P] Add invalid input border styling (aria-invalid support) in frontend/src/styles.css
-- [ ] T007 [P] Add disabled button styling in frontend/src/styles.css
+- [x] T003 [P] Implement `validateLocation()` function for ZIP/city-state dual format validation in frontend/src/utils/validation.ts
+- [x] T004 [P] Implement `validateDateRange()` function with 1990-present constraints in frontend/src/utils/validation.ts
+- [x] T005 [P] Add error message styling for inline validation errors in frontend/src/styles.css
+- [x] T006 [P] Add invalid input border styling (aria-invalid support) in frontend/src/styles.css
+- [x] T007 [P] Add disabled button styling in frontend/src/styles.css
 
 **Checkpoint**: Foundation ready - validation functions and styling complete, user story implementation can now begin
 
@@ -50,12 +50,12 @@
 
 ### Implementation for User Story 1
 
-- [ ] T008 [US1] Add validation state hooks (locationError, touched) to RiskQueryForm component in frontend/src/components/RiskQueryForm.tsx
-- [ ] T009 [US1] Add location input blur handler calling validateLocation() in frontend/src/components/RiskQueryForm.tsx
-- [ ] T010 [US1] Add inline error message display below location input with id="location-error" in frontend/src/components/RiskQueryForm.tsx
-- [ ] T011 [US1] Add ARIA attributes (aria-invalid, aria-describedby, role="alert", aria-live="polite") to location input and error in frontend/src/components/RiskQueryForm.tsx
-- [ ] T012 [US1] Implement submit button disabled state based on validation errors in frontend/src/components/RiskQueryForm.tsx
-- [ ] T013 [US1] Add Enter key submission prevention when validation fails in frontend/src/components/RiskQueryForm.tsx
+- [x] T008 [US1] Add validation state hooks (locationError, touched) to RiskQueryForm component in frontend/src/components/RiskQueryForm.tsx
+- [x] T009 [US1] Add location input blur handler calling validateLocation() in frontend/src/components/RiskQueryForm.tsx
+- [x] T010 [US1] Add inline error message display below location input with id="location-error" in frontend/src/components/RiskQueryForm.tsx
+- [x] T011 [US1] Add ARIA attributes (aria-invalid, aria-describedby, role="alert", aria-live="polite") to location input and error in frontend/src/components/RiskQueryForm.tsx
+- [x] T012 [US1] Implement submit button disabled state based on validation errors in frontend/src/components/RiskQueryForm.tsx
+- [x] T013 [US1] Add Enter key submission prevention when validation fails in frontend/src/components/RiskQueryForm.tsx
 - [ ] T014 [US1] Manual test: Verify location validation on Home page per quickstart.md Test Scenario 1
 
 **Checkpoint**: User Story 1 complete - Location validation works on Home page with accessibility support
@@ -70,14 +70,14 @@
 
 ### Implementation for User Story 2
 
-- [ ] T015 [US2] Add validation state hooks (dateErrors) to RiskQueryForm component in frontend/src/components/RiskQueryForm.tsx
-- [ ] T016 [US2] Add min/max attributes to start date input (min="1990-01-01", max=today) in frontend/src/components/RiskQueryForm.tsx
-- [ ] T017 [US2] Add min/max attributes to end date input (min="1990-01-01", max=today) in frontend/src/components/RiskQueryForm.tsx
-- [ ] T018 [US2] Add date blur handler calling validateDateRange() for both start and end dates in frontend/src/components/RiskQueryForm.tsx
-- [ ] T019 [US2] Add inline error messages below start and end date inputs with appropriate ids in frontend/src/components/RiskQueryForm.tsx
-- [ ] T020 [US2] Add ARIA attributes (aria-invalid, aria-describedby) to date inputs in frontend/src/components/RiskQueryForm.tsx
-- [ ] T021 [US2] Update submit button disabled logic to include date validation errors in frontend/src/components/RiskQueryForm.tsx
-- [ ] T022 [US2] Apply identical date validation to Drivers page date inputs in frontend/src/pages/Drivers.tsx
+- [x] T015 [US2] Add validation state hooks (dateErrors) to RiskQueryForm component in frontend/src/components/RiskQueryForm.tsx
+- [x] T016 [US2] Add min/max attributes to start date input (min="1990-01-01", max=today) in frontend/src/components/RiskQueryForm.tsx
+- [x] T017 [US2] Add min/max attributes to end date input (min="1990-01-01", max=today) in frontend/src/components/RiskQueryForm.tsx
+- [x] T018 [US2] Add date blur handler calling validateDateRange() for both start and end dates in frontend/src/components/RiskQueryForm.tsx
+- [x] T019 [US2] Add inline error messages below start and end date inputs with appropriate ids in frontend/src/components/RiskQueryForm.tsx
+- [x] T020 [US2] Add ARIA attributes (aria-invalid, aria-describedby) to date inputs in frontend/src/components/RiskQueryForm.tsx
+- [x] T021 [US2] Update submit button disabled logic to include date validation errors in frontend/src/components/RiskQueryForm.tsx
+- [x] T022 [US2] Apply identical date validation to Drivers page date inputs in frontend/src/pages/Drivers.tsx
 - [ ] T023 [US2] Manual test: Verify date validation on Home page per quickstart.md Test Scenario 2
 - [ ] T024 [US2] Manual test: Verify date validation consistency on Drivers page per quickstart.md Test Scenario 5
 
@@ -93,11 +93,11 @@
 
 ### Implementation for User Story 3
 
-- [ ] T025 [P] [US3] Add success indicator styling (optional green checkmark or border) in frontend/src/styles.css
-- [ ] T026 [US3] Add tooltip/title attribute to disabled submit button explaining why submission blocked in frontend/src/components/RiskQueryForm.tsx
-- [ ] T027 [US3] Verify validation only triggers on blur, not during active typing (review blur handler implementation) in frontend/src/components/RiskQueryForm.tsx
-- [ ] T028 [US3] Add visual red border to invalid inputs using CSS aria-invalid selector (verify T006 styling applied) in frontend/src/styles.css
-- [ ] T029 [US3] Ensure error messages persist until input becomes valid (no premature clearing) in frontend/src/components/RiskQueryForm.tsx
+- [x] T025 [P] [US3] Add success indicator styling (optional green checkmark or border) in frontend/src/styles.css
+- [x] T026 [US3] Add tooltip/title attribute to disabled submit button explaining why submission blocked in frontend/src/components/RiskQueryForm.tsx
+- [x] T027 [US3] Verify validation only triggers on blur, not during active typing (review blur handler implementation) in frontend/src/components/RiskQueryForm.tsx
+- [x] T028 [US3] Add visual red border to invalid inputs using CSS aria-invalid selector (verify T006 styling applied) in frontend/src/styles.css
+- [x] T029 [US3] Ensure error messages persist until input becomes valid (no premature clearing) in frontend/src/components/RiskQueryForm.tsx
 - [ ] T030 [US3] Manual test: Verify real-time feedback behavior per quickstart.md Test Scenario 3
 
 **Checkpoint**: All user stories complete - Full validation experience with enhanced visual feedback
@@ -107,6 +107,8 @@
 ## Phase 6: Polish & Cross-Cutting Concerns
 
 **Purpose**: Edge cases, accessibility validation, and cross-page consistency
+
+**Note**: All tasks below are manual testing/verification tasks. Implementation is complete.
 
 - [ ] T031 [P] Test paste behavior in location field (verify whitespace trimming) per quickstart.md Test Scenario 6
 - [ ] T032 [P] Test browser autofill interaction with validation per quickstart.md Test Scenario 6

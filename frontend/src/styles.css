@@ -88,3 +88,37 @@ html, body, #root {
   color: #b00020;
   font-size: 13px;
 }
+
+/* Validation error messages (T005) */
+.error-message {
+  color: #d32f2f;
+  font-size: 12px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+/* Invalid input field border (T006) */
+input[aria-invalid="true"],
+select[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+  border-color: #d32f2f;
+  border-width: 2px;
+}
+
+/* Disabled submit button (T007) */
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #ccc;
+}
+
+/* Success indicator styling (T025) */
+input[aria-invalid="false"]:focus,
+select[aria-invalid="false"]:focus,
+textarea[aria-invalid="false"]:focus {
+  border-color: #4caf50;
+  outline-color: #4caf50;
+}
+
+/* Visual red border for invalid inputs - verified (T028) */
+/* Already implemented in T006 above, no changes needed */
