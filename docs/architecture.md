@@ -51,22 +51,22 @@ The application follows **Clean Architecture** principles with clear separation 
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                    Presentation Layer                    │
-│              (FastAPI Routes, React Pages)               │
+│                    Presentation Layer                   │
+│              (FastAPI Routes, React Pages)              │
 └─────────────────────────────────────────────────────────┘
                             │
 ┌─────────────────────────────────────────────────────────┐
-│                    Application Layer                     │
-│              (Services, Business Logic)                  │
+│                    Application Layer                    │
+│              (Services, Business Logic)                 │
 └─────────────────────────────────────────────────────────┘
                             │
 ┌─────────────────────────────────────────────────────────┐
-│                      Domain Layer                        │
-│         (Models, Validation, Domain Logic)               │
+│                      Domain Layer                       │
+│         (Models, Validation, Domain Logic)              │
 └─────────────────────────────────────────────────────────┘
                             │
 ┌─────────────────────────────────────────────────────────┐
-│                  Infrastructure Layer                    │
+│                  Infrastructure Layer                   │
 │     (Earth Engine, Geocoding, Caching, Config)          │
 └─────────────────────────────────────────────────────────┘
 ```
