@@ -136,3 +136,8 @@
 
 ## speckit.specify
 * add another feature to this spec.md file; in the current application on both home and query pages, handle input data validation for zip code and date range; zip code should be a 5-digit number; handle the format validation on client side and if an invalid zip code is entered, show an error message; for date range have date picker restrict the values entered to be only valid dates;
+* run speckit.clarify to get more details about this feature
+* speckit.plan -- create an implementation plan for this feature list
+* speckit.tasks -- generate actionable implementation tasks, categorize into phases
+* speckit.implement -- implement tasks from Phase 1
+* 

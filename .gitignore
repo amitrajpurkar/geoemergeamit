@@ -14,3 +14,13 @@ env/local-auth.yaml
 # caches
 .cache/
 .cached
+
+# Node.js/TypeScript (frontend)
+node_modules/
+dist/
+build/
+*.log
+.env*
+.DS_Store
+*.tmp
+*.swp
